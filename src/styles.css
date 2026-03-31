@@ -159,7 +159,7 @@ h3 {
 
 .nav-link {
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: -0.01em;
   transition: color 0.2s ease;
@@ -176,7 +176,7 @@ h3 {
   justify-content: center;
   border-radius: 999px;
   padding: 12px 18px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: -0.01em;
   transition:
@@ -231,7 +231,7 @@ h3 {
 
 .hero h1,
 .page-hero h1 {
-  font-size: clamp(3rem, 5.8vw, 5.2rem);
+  font-size: clamp(2.6rem, 5vw, 4.6rem);
   max-width: 13ch;
 }
 
@@ -242,7 +242,7 @@ h3 {
 }
 
 .page-hero h1 {
-  font-size: clamp(2.7rem, 4.6vw, 4.25rem);
+  font-size: clamp(2.3rem, 4vw, 3.7rem);
   font-weight: 560;
   line-height: 1.02;
   letter-spacing: -0.055em;
@@ -251,7 +251,7 @@ h3 {
 
 .page-copy {
   max-width: 56ch;
-  font-size: 1.02rem;
+  font-size: 0.98rem;
   line-height: 1.75;
 }
 
@@ -283,7 +283,7 @@ h3 {
 }
 
 .hero-panel h2 {
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-size: clamp(1.5rem, 2.3vw, 2.05rem);
   font-weight: 560;
   margin-bottom: 4px;
 }
@@ -318,7 +318,7 @@ h3 {
 }
 
 .stat-card strong {
-  font-size: 2rem;
+  font-size: 1.65rem;
   color: var(--heading);
 }
 
@@ -328,7 +328,7 @@ h3 {
 }
 
 .section-heading h2 {
-  font-size: clamp(2rem, 3vw, 3.1rem);
+  font-size: clamp(1.7rem, 2.35vw, 2.55rem);
   font-weight: 560;
   line-height: 1.05;
   letter-spacing: -0.05em;
@@ -371,7 +371,7 @@ h3 {
 .band-card h3,
 .process-card h3,
 .faq-card h3 {
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   font-weight: 600;
   line-height: 1.15;
   letter-spacing: -0.03em;
@@ -402,7 +402,7 @@ h3 {
 }
 
 .large-card h2 {
-  font-size: clamp(1.7rem, 2.1vw, 2.1rem);
+  font-size: clamp(1.4rem, 1.7vw, 1.75rem);
   font-weight: 580;
 }
 
@@ -505,7 +505,7 @@ h3 {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.09);
   color: #efe6dc;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
 }
 
 .metric-stack {
@@ -527,7 +527,7 @@ h3 {
 
 .metric-row strong,
 .pipeline-step strong {
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 .pipeline-card {
@@ -551,7 +551,7 @@ h3 {
 }
 
 .cta-banner h2 {
-  font-size: clamp(1.9rem, 3.2vw, 2.9rem);
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
   font-weight: 580;
   line-height: 1.04;
   letter-spacing: -0.05em;
@@ -618,7 +618,7 @@ h3 {
 
 .mini-copy {
   color: #aeb4c0;
-  font-size: 0.94rem;
+  font-size: 0.9rem;
 }
 
 .footer-links {
@@ -672,7 +672,7 @@ h3 {
 
   .hero h1,
   .page-hero h1 {
-    font-size: clamp(2.4rem, 10vw, 3.5rem);
+    font-size: clamp(2.1rem, 8.6vw, 3rem);
     max-width: 100%;
   }
 
