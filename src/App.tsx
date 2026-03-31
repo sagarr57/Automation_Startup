@@ -178,9 +178,12 @@ function HomePage() {
           title="Three focused capabilities."
           description="Minimal, clear, and commercially useful."
         />
-        <div className="card-grid">
-          {serviceCards.map((service) => (
-            <article className="card" key={service.title}>
+        <div className="feature-card-grid">
+          {serviceCards.map((service, index) => (
+            <article
+              className={index === 0 ? "card feature-card feature-card-wide" : "card feature-card"}
+              key={service.title}
+            >
               <p className="mini-label">{service.index}</p>
               <h3>{service.title}</h3>
               <p className="card-tagline">{service.tagline}</p>
@@ -240,9 +243,12 @@ function HomePage() {
           title="Outcome-led positioning."
           description="Keep the proof simple and credible."
         />
-        <div className="card-grid">
-          {resultStories.map((story) => (
-            <article className="card" key={story.headline}>
+        <div className="feature-card-grid results-card-grid">
+          {resultStories.map((story, index) => (
+            <article
+              className={index === 0 ? "card result-card feature-card-wide" : "card result-card"}
+              key={story.headline}
+            >
               <p className="mini-label">
                 {story.category} / {story.vertical}
               </p>
