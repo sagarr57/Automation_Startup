@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { NavLink, Route, Routes } from "react-router-dom";
 import {
   challengePoints,
@@ -512,6 +512,8 @@ function ContactPage() {
 }
 
 function Layout() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="site-shell">
       <header className="site-header">
@@ -519,11 +521,23 @@ function Layout() {
           <span>Drash</span>
           <small>Autonomous AI Systems</small>
         </NavLink>
-        <nav className="site-nav">
+        <button
+          type="button"
+          className="mobile-menu-toggle"
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileMenuOpen}
+          onClick={() => setMobileMenuOpen((value) => !value)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+        <nav className={mobileMenuOpen ? "site-nav site-nav-open" : "site-nav"}>
           {navigation.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
+              onClick={() => setMobileMenuOpen(false)}
               className={({ isActive }) =>
                 isActive ? "nav-link nav-link-active" : "nav-link"
               }
@@ -532,7 +546,11 @@ function Layout() {
             </NavLink>
           ))}
         </nav>
-        <NavLink className="button button-primary compact-button" to="/contact">
+        <NavLink
+          className="button button-primary compact-button header-cta"
+          to="/contact"
+          onClick={() => setMobileMenuOpen(false)}
+        >
           Start a project
         </NavLink>
       </header>
