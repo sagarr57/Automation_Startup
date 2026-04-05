@@ -48,16 +48,40 @@ function SectionIntro({
   );
 }
 
-function IntegrationsStrip() {
+const toolBadgeByName: Record<string, string> = {
+  HubSpot: "HS",
+  Zoho: "ZO",
+  WhatsApp: "WA",
+  Twilio: "TW",
+  Calendly: "CA",
+  "Google Sheets": "GS",
+  Slack: "SL",
+  n8n: "n8",
+  OpenAI: "AI",
+};
+
+function ToolBadge({ tool }: { tool: string }) {
+  return <span className="logo-pill-badge">{toolBadgeByName[tool] ?? tool.slice(0, 2).toUpperCase()}</span>;
+}
+
+function IntegrationsStrip({ compact = false }: { compact?: boolean }) {
+  const marqueeItems = [...integrationTools, ...integrationTools];
+
   return (
-    <section className="logo-strip">
-      <p className="eyebrow">Integrates With Your Stack</p>
-      <div className="logo-strip-inner">
-        {integrationTools.map((tool) => (
-          <span key={tool} className="logo-pill">
-            {tool}
-          </span>
-        ))}
+    <section className={compact ? "logo-strip logo-strip-compact" : "logo-strip"}>
+      <div className="logo-strip-header">
+        <p className="eyebrow">Integrations</p>
+        <h2>We connect with the tools you already use.</h2>
+      </div>
+      <div className="logo-marquee">
+        <div className="logo-marquee-track">
+          {marqueeItems.map((tool, index) => (
+            <span key={`${tool}-${index}`} className="logo-pill">
+              <ToolBadge tool={tool} />
+              <span>{tool}</span>
+            </span>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -217,6 +241,7 @@ function HomePage() {
           </div>
         </div>
       </section>
+      <IntegrationsStrip compact />
 
       <section className="home-services-section">
         <div className="home-services-intro">
@@ -419,28 +444,33 @@ function HowItWorksPage() {
 function AboutPage() {
   return (
     <>
-      <PageHero
-        eyebrow="About"
-        title="Dravyx AI is built to make automation feel useful, clear, and commercially relevant."
-        description="We focus on business outcomes first, then design the automation around the real workflow."
-      />
-      <section className="two-column">
-        <article className="band-card">
-          <h3>Built for service businesses</h3>
-          <p>
-            Dravyx AI is designed for teams that handle enquiries, bookings,
-            follow-up, and front-office operations every day.
+      <section className="about-top">
+        <div className="about-intro">
+          <p className="eyebrow">About</p>
+          <h1>Dravyx AI is built to make automation feel useful, clear, and commercially relevant.</h1>
+          <p className="page-copy">
+            We focus on business outcomes first, then design the automation around
+            the real workflow.
           </p>
-        </article>
-        <article className="band-card">
-          <h3>Focused on real business value</h3>
-          <p>
-            The goal is simple: save time, respond faster, and make it easier to
-            see what is working.
-          </p>
-        </article>
+        </div>
+        <div className="about-highlights">
+          <article className="band-card">
+            <h3>Built for service businesses</h3>
+            <p>
+              Dravyx AI is designed for teams that handle enquiries, bookings,
+              follow-up, and front-office operations every day.
+            </p>
+          </article>
+          <article className="band-card">
+            <h3>Focused on real business value</h3>
+            <p>
+              The goal is simple: save time, respond faster, and make it easier to
+              see what is working.
+            </p>
+          </article>
+        </div>
       </section>
-      <section className="content-grid">
+      <section className="content-grid about-principles">
         <SectionIntro
           eyebrow="Principles"
           title="How the work is designed."
@@ -493,21 +523,26 @@ function FAQPage() {
 function ContactPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Contact"
-        title="Book a strategy call and choose the right first workflow."
-        description="We will look at where you are losing time or leads, then map the best starting point."
-      />
       <section className="contact-shell">
-        <div className="contact-card">
-          <h2>What happens on the call</h2>
-          <ul>
-            <li>Review the workflow that is costing you time or revenue</li>
-            <li>Choose the best first channel: phone, WhatsApp, web chat, or forms</li>
-            <li>Agree on scope, timeline, and success measures</li>
-          </ul>
+        <div className="contact-sidebar">
+          <div className="contact-intro">
+            <p className="eyebrow">Contact</p>
+            <h1>Book a strategy call and choose the right first workflow.</h1>
+            <p className="page-copy">
+              We will look at where you are losing time or leads, then map the
+              best starting point.
+            </p>
+          </div>
+          <div className="contact-card">
+            <h2>What happens on the call</h2>
+            <ul>
+              <li>Review the workflow that is costing you time or revenue</li>
+              <li>Choose the best first channel: phone, WhatsApp, web chat, or forms</li>
+              <li>Agree on scope, timeline, and success measures</li>
+            </ul>
+          </div>
         </div>
-        <div className="contact-card">
+        <div className="contact-card contact-form-card">
           <h2>Project enquiry</h2>
           <form className="contact-form" onSubmit={handleContactSubmit}>
             <label>
@@ -525,7 +560,7 @@ function ContactPage() {
             <label>
               <span>What do you want to automate first?</span>
               <textarea
-                rows={5}
+                rows={4}
                 placeholder="Lead response, reminders, CRM updates, reporting..."
               />
             </label>
@@ -533,13 +568,6 @@ function ContactPage() {
               Send enquiry
             </button>
           </form>
-        </div>
-        <div className="contact-card">
-          <h2>Suggested contact details</h2>
-          <p>Email: hello@dravyxai.com</p>
-          <p>Location: Dubai, UAE</p>
-          <p>Format: 30-minute strategy call</p>
-          <p>Best for: real estate, clinics, concierge, and service-led teams</p>
         </div>
       </section>
     </>

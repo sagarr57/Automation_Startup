@@ -265,7 +265,7 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 56px;
-  padding-top: 28px;
+  padding-top: 8px;
 }
 
 .hero,
@@ -282,10 +282,11 @@ h3 {
 .hero {
   grid-template-columns: minmax(0, 640px) minmax(280px, 330px);
   justify-content: center;
-  min-height: calc(100svh - 150px);
+  min-height: calc(100svh - 350px);
   max-height: none;
   align-items: center;
   gap: 14px;
+  padding-top: 4px;
 }
 
 .hero h1,
@@ -301,11 +302,11 @@ h3 {
 }
 
 .page-hero h1 {
-  font-size: clamp(2.3rem, 4vw, 3.7rem);
+  font-size: clamp(1.95rem, 3.1vw, 3rem);
   font-weight: 560;
-  line-height: 1.02;
+  line-height: 1.04;
   letter-spacing: -0.055em;
-  max-width: 14ch;
+  max-width: 18ch;
 }
 
 .page-copy {
@@ -401,7 +402,49 @@ h3 {
 .content-grid {
   grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
   align-items: start;
-  gap: 36px;
+  gap: 28px;
+}
+
+.about-top {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.92fr) minmax(300px, 1.08fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.about-intro {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  padding: 4px 2px 2px;
+}
+
+.about-intro h1 {
+  font-size: clamp(1.95rem, 3vw, 3rem);
+  font-weight: 560;
+  line-height: 1.04;
+  letter-spacing: -0.055em;
+  max-width: 12ch;
+}
+
+.about-intro .page-copy {
+  max-width: 45ch;
+}
+
+.about-highlights {
+  display: grid;
+  gap: 16px;
+  padding-top: 48px;
+}
+
+.about-principles {
+  grid-template-columns: minmax(280px, 0.92fr) minmax(300px, 1.08fr);
+  gap: 22px;
+  margin-top: 10px;
+}
+
+.about-principles .section-heading {
+  padding-top: 4px;
 }
 
 .home-services-section {
@@ -433,12 +476,13 @@ h3 {
 
 .card-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
 }
 
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
+  gap: 20px;
   align-items: stretch;
 }
 
@@ -617,8 +661,15 @@ h3 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.contact-shell {
+  grid-template-columns: minmax(280px, 0.86fr) minmax(320px, 1.14fr);
+  gap: 20px;
+  align-items: start;
+}
+
 .process-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
 }
 
 .process-card span {
@@ -640,20 +691,71 @@ h3 {
   background: rgba(255, 255, 255, 0.025);
 }
 
-.logo-strip-inner {
+.logo-strip-compact {
+  margin-top: -58px;
+  padding: 18px 0;
+  border-radius: 26px;
+  background:
+    linear-gradient(90deg, rgba(242, 166, 90, 0.08), transparent 18%, transparent 82%, rgba(78, 127, 171, 0.08)),
+    rgba(255, 255, 255, 0.025);
+}
+
+.logo-strip-header {
+  display: grid;
+  gap: 6px;
+  padding: 0 20px;
+  margin-bottom: 14px;
+}
+
+.logo-strip-header h2 {
+  font-size: clamp(1.15rem, 1.7vw, 1.55rem);
+  font-weight: 560;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  max-width: 22ch;
+}
+
+.logo-marquee {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+
+.logo-marquee-track {
   display: flex;
+  align-items: center;
   gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 12px;
+  width: max-content;
+  padding: 0 20px;
+  animation: logoMarquee 26s linear infinite;
 }
 
 .logo-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   padding: 10px 14px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.09);
   color: #efe6dc;
   font-size: 0.88rem;
+  white-space: nowrap;
+}
+
+.logo-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(242, 166, 90, 0.2), rgba(255, 255, 255, 0.08));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--accent-soft);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
 .metric-stack {
@@ -723,7 +825,12 @@ h3 {
 }
 
 .page-hero {
-  padding: 20px 0 0;
+  padding: 6px 0 2px;
+  max-width: 860px;
+}
+
+.page-hero .page-copy {
+  max-width: 60ch;
 }
 
 .single-column-mobile {
@@ -733,6 +840,31 @@ h3 {
 .contact-form {
   display: grid;
   gap: 14px;
+}
+
+.contact-sidebar {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.contact-intro {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  padding: 4px 2px 2px;
+}
+
+.contact-intro h1 {
+  font-size: clamp(1.95rem, 3vw, 3rem);
+  font-weight: 560;
+  line-height: 1.04;
+  letter-spacing: -0.055em;
+  max-width: 12ch;
+}
+
+.contact-intro .page-copy {
+  max-width: 44ch;
 }
 
 .contact-form label {
@@ -753,6 +885,11 @@ h3 {
   font: inherit;
 }
 
+.contact-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
   color: #8f97a8;
@@ -762,6 +899,10 @@ h3 {
 .contact-form textarea:focus {
   outline: 2px solid rgba(242, 166, 90, 0.45);
   outline-offset: 2px;
+}
+
+.contact-form-card {
+  padding: 22px 22px 20px;
 }
 
 .site-footer {
@@ -1277,6 +1418,16 @@ h3 {
   }
 }
 
+@keyframes logoMarquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 6px));
+  }
+}
+
 .footer-note {
   margin: 0;
   color: #98a2b3;
@@ -1286,6 +1437,7 @@ h3 {
 
 @media (max-width: 980px) {
   .site-footer,
+  .about-top,
   .content-grid,
   .compact,
   .contact-shell,
@@ -1333,9 +1485,30 @@ h3 {
     max-width: 100%;
   }
 
+  .logo-strip-header h2 {
+    max-width: none;
+  }
+
   .card-grid,
   .services-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contact-shell {
+    grid-template-columns: minmax(250px, 0.88fr) minmax(300px, 1.12fr);
+    gap: 18px;
+  }
+
+  .about-intro h1 {
+    max-width: 13ch;
+  }
+
+  .about-highlights {
+    padding-top: 36px;
+  }
+
+  .contact-intro h1 {
+    max-width: 13ch;
   }
 
   .process-preview {
@@ -1489,6 +1662,24 @@ h3 {
     max-width: 100%;
   }
 
+  .contact-intro h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+    max-width: 100%;
+  }
+
+  .about-intro h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+    max-width: 100%;
+  }
+
+  .about-highlights {
+    padding-top: 0;
+  }
+
+  .page-hero {
+    padding-top: 4px;
+  }
+
   .section-heading h2,
   .cta-banner h2 {
     max-width: 100%;
@@ -1504,6 +1695,22 @@ h3 {
     min-height: calc(100svh - 112px);
     align-content: start;
     gap: 18px;
+  }
+
+  .logo-strip-compact {
+    margin-top: 0;
+    padding: 16px 0;
+  }
+
+  .logo-strip-header {
+    padding: 0 18px;
+    margin-bottom: 12px;
+  }
+
+  .logo-marquee-track {
+    padding: 0 18px;
+    gap: 10px;
+    animation-duration: 24s;
   }
 
   .card-grid,
@@ -1539,7 +1746,7 @@ h3 {
 
   .main-content {
     gap: 48px;
-    padding-top: 24px;
+    padding-top: 12px;
   }
 
   .stat-card,
