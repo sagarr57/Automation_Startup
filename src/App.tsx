@@ -1,5 +1,6 @@
 import { FormEvent, ReactNode, useEffect, useState } from "react";
 import { NavLink, Route, Routes, useLocation } from "react-router-dom";
+import AskDravyxChat from "./AskDravyxChat";
 import {
   faqs,
   featuredMetrics,
@@ -561,6 +562,10 @@ function PrivacyPolicyPage() {
             project information you share through the contact form or direct
             outreach.
           </p>
+          <p>
+            If you use the website chat assistant, we may also receive the
+            questions or project details you choose to type into that chat.
+          </p>
         </article>
         <article className="band-card">
           <h3>How we use it</h3>
@@ -712,6 +717,7 @@ function Layout() {
           <p className="footer-note">© 2026 Dravyx AI. All rights reserved.</p>
         </div>
       </footer>
+      <AskDravyxChat />
     </div>
   );
 }
