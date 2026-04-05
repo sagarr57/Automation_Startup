@@ -1299,6 +1299,18 @@ h3 {
   line-height: 1.55;
 }
 
+.ask-dravyx-message-link {
+  display: inline-flex;
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff7ef;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
 .ask-dravyx-message-bot {
   justify-self: start;
   background: rgba(255, 255, 255, 0.045);

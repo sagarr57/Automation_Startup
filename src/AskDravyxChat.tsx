@@ -1,10 +1,12 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { faqs, industries, processSteps, serviceCards } from "./siteData";
+import { faqs, industries, integrationTools, processSteps, serviceCards } from "./siteData";
 
 type ChatMessage = {
   id: number;
   role: "bot" | "user";
   text: string;
+  linkLabel?: string;
+  linkHref?: string;
 };
 
 type ConversationContext = {
@@ -21,6 +23,27 @@ const initialMessage: ChatMessage = {
     "Hey, I'm Dravyx. I can help with voice agents, workflow automation, reporting, setup time, pricing, and whether our service is a good fit for your business.",
 };
 
+type ChatReply = {
+  text: string;
+  linkLabel?: string;
+  linkHref?: string;
+};
+
+const defaultContactLinkLabel = "Contact us";
+const defaultContactLinkHref = "/contact";
+
+const integrationAliases: Record<string, string[]> = {
+  HubSpot: ["hubspot"],
+  Zoho: ["zoho"],
+  WhatsApp: ["whatsapp", "wa"],
+  Twilio: ["twilio"],
+  Calendly: ["calendly"],
+  "Google Sheets": ["google sheets", "sheets"],
+  Slack: ["slack"],
+  n8n: ["n8n", "n8n.io", "n 8 n"],
+  OpenAI: ["openai", "chatgpt", "gpt"],
+};
+
 function containsAny(text: string, terms: string[]) {
   return terms.some((term) => text.includes(term));
 }
@@ -35,6 +58,94 @@ function joinLabels(values: string[]) {
   }
 
   return `${values.slice(0, -1).join(", ")}, and ${values[values.length - 1]}`;
+}
+
+function makeReply(text: string, linkLabel?: string, linkHref?: string): ChatReply {
+  return {
+    text,
+    linkLabel: linkLabel ?? defaultContactLinkLabel,
+    linkHref: linkHref ?? defaultContactLinkHref,
+  };
+}
+
+function detectMentionedIntegration(text: string) {
+  for (const [tool, aliases] of Object.entries(integrationAliases)) {
+    if (aliases.some((alias) => text.includes(alias))) {
+      return tool;
+    }
+  }
+
+  return null;
+}
+
+function buildKnownIntegrationAnswer(tool: string): ChatReply {
+  const commonIntro = `Yes, ${tool} can be part of a Dravyx AI workflow depending on the use case.`;
+
+  if (tool === "Twilio") {
+    return makeReply(
+      `${commonIntro} It is especially relevant for calling, messaging, and communication workflows, so it can be a strong fit when you need phone or WhatsApp automation. If you want, tell me the use case and I can suggest where Twilio would typically sit in the flow.`,
+    );
+  }
+
+  if (tool === "HubSpot") {
+    return makeReply(
+      `${commonIntro} HubSpot is especially useful when you want enquiries, qualification, follow-up, and internal visibility to stay connected in one CRM workflow. It can be a strong fit for lead response, sales handoff, and keeping your pipeline organised.`,
+    );
+  }
+
+  if (tool === "Zoho") {
+    return makeReply(
+      `${commonIntro} Zoho can be used for lead capture, contact updates, qualification handoff, follow-up tracking, and keeping your sales or operations process organised. In most projects, the goal is to make the CRM work better with your enquiry and booking flow rather than replace it.`,
+    );
+  }
+
+  if (tool === "Slack") {
+    return makeReply(
+      `${commonIntro} Slack is usually useful for internal alerts, team notifications, and handoff workflows so your team gets the right update at the right time without manual chasing.`,
+    );
+  }
+
+  if (tool === "Calendly") {
+    return makeReply(
+      `${commonIntro} Calendly is usually helpful for booking flows, scheduling, and moving qualified enquiries straight into the next step without back-and-forth messages.`,
+    );
+  }
+
+  if (tool === "Google Sheets") {
+    return makeReply(
+      `${commonIntro} Google Sheets can work well for lightweight operational tracking, lead logs, reporting support, or transitional workflows when a business is not ready for a heavier system yet.`,
+    );
+  }
+
+  if (tool === "WhatsApp") {
+    return makeReply(
+      `${commonIntro} WhatsApp is a strong fit for fast first response, qualification, follow-up, reminders, and keeping customer communication in a familiar channel.`,
+    );
+  }
+
+  if (tool === "n8n") {
+    return makeReply(
+      `${commonIntro} n8n is a strong fit when you need custom workflow automation between multiple systems. It is especially useful for routing data between tools, triggering multi-step automations, approvals, notifications, CRM updates, form handling, and other behind-the-scenes business logic. In many projects, n8n can act as the automation layer that connects your enquiry flow, internal operations, and reporting together.`,
+    );
+  }
+
+  if (tool === "OpenAI") {
+    return makeReply(
+      `${commonIntro} OpenAI-style models can support conversational logic, classification, summarisation, and AI-assisted workflow steps where language understanding matters.`,
+    );
+  }
+
+  return makeReply(
+    `${commonIntro} The exact setup depends on the workflow, the systems involved, and what result you want to achieve first.`,
+  );
+}
+
+function buildUnknownIntegrationAnswer(): ChatReply {
+  return makeReply(
+    "Yes, we can usually support custom integrations as well. The right setup depends on the tool, what you want it to do, and how it should connect with the rest of your workflow. If you share the exact systems and outcome you want, we can recommend the best approach.",
+    defaultContactLinkLabel,
+    defaultContactLinkHref,
+  );
 }
 
 function inferConversationContext(
@@ -105,150 +216,247 @@ function getInterestSpecificRecommendation(interest: ConversationContext["intere
   return "";
 }
 
-function getDravyxAnswer(question: string, context: ConversationContext) {
+function getDravyxAnswer(question: string, context: ConversationContext): ChatReply {
   const text = question.toLowerCase();
   const serviceNames = serviceCards.map((service) => service.title);
   const servicePoints = serviceCards.flatMap((service) => service.points);
   const industriesList = industries.map((industry) => industry.name);
   const processNames = processSteps.map((step) => step.title);
+  const mentionedIntegration = detectMentionedIntegration(text);
+  const asksAboutIntegration = /(integrate|integration|connect|sync|work with|use with)/.test(text);
+  const looksLikeToolQuestion =
+    mentionedIntegration !== null &&
+    (asksAboutIntegration || text.trim() === mentionedIntegration.toLowerCase() || text.split(/\s+/).length <= 5);
 
   if (/^(hi|hii|hello|hey|hey dravyx|yo|hola)\b/.test(text)) {
-    return "Hey, how can I help you today? You can ask me about our services, setup time, pricing, or what Dravyx AI can automate for your business.";
+    return makeReply(
+      "Hey, how can I help you today? You can ask me about our services, setup time, pricing, or what Dravyx AI can automate for your business.",
+    );
   }
 
   if (/(how are you|how are you doing|how's it going|whats up|what's up)/.test(text)) {
-    return "I'm doing well, thanks for asking. I'm here to help you understand what Dravyx AI offers and what might be the best first automation for your business.";
+    return makeReply(
+      "I'm doing well, thanks for asking. I'm here to help you understand what Dravyx AI offers and what might be the best first automation for your business.",
+    );
   }
 
   if (/(who are you|what are you|are you a bot)/.test(text)) {
-    return "I'm Dravyx, your website assistant. I can give quick answers about our voice agents, automation services, reporting, timelines, and next steps.";
+    return makeReply(
+      "I'm Dravyx, your website assistant. I can give quick answers about our voice agents, automation services, reporting, timelines, and next steps.",
+    );
   }
 
   if (/(what is dravyx|what is dravyx ai|tell me about dravyx|about dravyx)/.test(text)) {
-    return "Dravyx AI helps service businesses respond faster, automate repetitive follow-up, and get clearer visibility into leads, bookings, and workflow performance. The offer is focused on three areas: voice agents, workflow automation, and strategic reporting.";
+    return makeReply(
+      "Dravyx AI helps service businesses respond faster, automate repetitive follow-up, and get clearer visibility into leads, bookings, and workflow performance. The offer is focused on three areas: voice agents, workflow automation, and strategic reporting.",
+    );
   }
 
   if (/(thank you|thanks|thankyou|thx)/.test(text)) {
-    return "You're welcome. If you want, I can also help you figure out which Dravyx service is the best starting point for your business.";
+    return makeReply(
+      "You're welcome. If you want, I can also help you figure out which Dravyx service is the best starting point for your business.",
+    );
   }
 
   if (/(bye|goodbye|see you|talk later|catch you later)/.test(text)) {
-    return "Happy to help. If you need anything else, just ask. You can also book a strategy call whenever you're ready.";
+    return makeReply(
+      "Happy to help. If you need anything else, just ask. You can also book a strategy call whenever you're ready.",
+      defaultContactLinkLabel,
+      defaultContactLinkHref,
+    );
   }
 
   if (/(price|pricing|cost|budget|quote)/.test(text)) {
-    return "Pricing depends on the workflow, channels, and tools involved. We usually recommend starting with one focused automation first, then expanding once it is working well. The best next step is a strategy call so we can scope it properly.";
+    return makeReply(
+      "Pricing depends on the workflow, channels, and tools involved. We usually recommend starting with one focused automation first, then expanding once it is working well. The best next step is a strategy call so we can scope it properly.",
+      defaultContactLinkLabel,
+      defaultContactLinkHref,
+    );
   }
 
   if (/(roi|return|value|results|outcome|benefit|worth it)/.test(text)) {
-    return "The main business value usually comes from faster response, cleaner follow-up, lower admin load, and better visibility into what is converting. In practical terms, that often means fewer missed enquiries, less manual chasing, and a clearer path from inbound lead to booked next step.";
+    return makeReply(
+      "The main business value usually comes from faster response, cleaner follow-up, lower admin load, and better visibility into what is converting. In practical terms, that often means fewer missed enquiries, less manual chasing, and a clearer path from inbound lead to booked next step.",
+    );
+  }
+
+  if (looksLikeToolQuestion) {
+    return buildKnownIntegrationAnswer(mentionedIntegration);
+  }
+
+  if (
+    (asksAboutIntegration || /can you|do you|support/.test(text)) &&
+    !mentionedIntegration &&
+    /(salesforce|pipedrive|intercom|stripe|shopify|zendesk|xero|quickbooks|monday|notion|airtable|freshdesk|typeform|jotform|gmail|teams)/.test(
+      text,
+    )
+  ) {
+    return buildUnknownIntegrationAnswer();
+  }
+
+  if (/(integration|integrations|tools|software)/.test(text)) {
+    return makeReply(
+      `We try to work with the tools you already use instead of forcing a full replacement. Right now the integrations we actively mention on the site are ${joinLabels(integrationTools)}. If your stack includes something else, we can usually support custom integrations too. The best next step is to send us the exact tools and workflow through the contact form.`,
+      defaultContactLinkLabel,
+      defaultContactLinkHref,
+    );
   }
 
   if (/(voice|phone|call|calls|whatsapp|inbound|lead response)/.test(text)) {
-    return "Yes, this is one of the main things we do. Dravyx AI offers voice agents for phone and WhatsApp so your business can respond instantly, qualify enquiries, and hand over clean next steps without missing the first conversation.";
+    return makeReply(
+      "Yes, this is one of the main things we do. Dravyx AI offers voice agents for phone and WhatsApp so your business can respond instantly, qualify enquiries, and hand over clean next steps without missing the first conversation.",
+    );
   }
 
   if (/(missed call|missed calls|missed enquiry|missed enquiries|slow response|speed to lead)/.test(text)) {
-    return "That is exactly the kind of problem Dravyx AI is designed to solve. We help businesses respond faster to missed calls and new enquiries so leads do not go cold while your team is busy or offline.";
+    return makeReply(
+      "That is exactly the kind of problem Dravyx AI is designed to solve. We help businesses respond faster to missed calls and new enquiries so leads do not go cold while your team is busy or offline.",
+    );
   }
 
   if (/(follow up|follow-up|followups|chasing leads|reminder|reminders|rebooking)/.test(text)) {
-    return "Yes. Dravyx AI can automate follow-up, reminders, rebooking, and handoff flows so your team does not have to manually chase every step. This is especially useful when a lot of admin sits between the first enquiry and the actual booking.";
+    return makeReply(
+      "Yes. Dravyx AI can automate follow-up, reminders, rebooking, and handoff flows so your team does not have to manually chase every step. This is especially useful when a lot of admin sits between the first enquiry and the actual booking.",
+    );
   }
 
   if (/(automation|workflow|crm|calendar|forms|handoff|sync)/.test(text)) {
-    return "We build workflow automation that connects the tools you already use, such as CRM, forms, calendars, notifications, and follow-up, so your team spends less time on repetitive manual work and your process feels smoother.";
-  }
-
-  if (/(integration|integrations|tools|software|hubspot|zoho|twilio|calendly|slack|google sheets|n8n|openai)/.test(text)) {
-    return "We try to work with the tools you already use instead of forcing a full replacement. Typical integrations can include CRM, forms, calendars, WhatsApp, Twilio, Google Sheets, Slack, n8n, and related workflow tools depending on the project.";
+    return makeReply(
+      "We build workflow automation that connects the tools you already use, such as CRM, forms, calendars, notifications, and follow-up, so your team spends less time on repetitive manual work and your process feels smoother.",
+    );
   }
 
   if (/(report|reporting|dashboard|analytics|bi|visibility|metrics)/.test(text)) {
-    return "Dravyx AI also provides strategic reporting so you can clearly see response time, enquiry quality, bookings, and where revenue leakage or process issues need attention. The idea is to make decision-making clearer, not just automate tasks.";
+    return makeReply(
+      "Dravyx AI also provides strategic reporting so you can clearly see response time, enquiry quality, bookings, and where revenue leakage or process issues need attention. The idea is to make decision-making clearer, not just automate tasks.",
+    );
   }
 
   if (/(monthly|optimi[sz]e|improve after launch|after launch|ongoing|support)/.test(text)) {
-    return "After launch, the work should not just sit there. We review performance, look at the numbers, and refine the workflow based on real enquiries so the system keeps improving over time.";
+    return makeReply(
+      "After launch, the work should not just sit there. We review performance, look at the numbers, and refine the workflow based on real enquiries so the system keeps improving over time.",
+    );
   }
 
   if (/(how long|timeline|setup|launch|weeks|go live)/.test(text)) {
-    return "Most focused setups can go live within a few weeks. Voice-agent projects are often live in 2 to 4 weeks, and lighter workflow automations can move even faster when the process and tools are already clear.";
+    return makeReply(
+      "Most focused setups can go live within a few weeks. Voice-agent projects are often live in 2 to 4 weeks, and lighter workflow automations can move even faster when the process and tools are already clear.",
+    );
   }
 
   if (/(how does it work|process|steps|implementation|delivery|plan)/.test(text)) {
-    return `The process is intentionally simple: ${joinLabels(processNames)}. In practice, that means we first identify the workflow with the clearest business impact, agree the scope and timeline, build and test it properly, then launch and improve based on real usage.`;
+    return makeReply(
+      `The process is intentionally simple: ${joinLabels(processNames)}. In practice, that means we first identify the workflow with the clearest business impact, agree the scope and timeline, build and test it properly, then launch and improve based on real usage.`,
+    );
   }
 
   if (/(arabic|english|language|bilingual)/.test(text)) {
-    return "Yes. Dravyx AI can support both Arabic and English customer-facing workflows depending on the channel and use case.";
+    return makeReply(
+      "Yes. Dravyx AI can support both Arabic and English customer-facing workflows depending on the channel and use case.",
+    );
   }
 
   if (/(what do you do|what can you do|what can dravyx do|how can you help)/.test(text)) {
-    return `Dravyx AI helps service businesses in three main ways: ${joinLabels(serviceNames)}. That usually means faster first response, less repetitive admin, and better visibility into what is happening across enquiries and bookings.`;
+    return makeReply(
+      `Dravyx AI helps service businesses in three main ways: ${joinLabels(serviceNames)}. That usually means faster first response, less repetitive admin, and better visibility into what is happening across enquiries and bookings.`,
+    );
   }
 
   if (/(which service|what should i choose|where should i start|best first step|recommend|recommendation|what should we automate first)/.test(text)) {
     const industryRecommendation = getIndustrySpecificRecommendation(context.industry);
     const interestRecommendation = getInterestSpecificRecommendation(context.interest);
 
-    return `${industryRecommendation}${interestRecommendation ? ` ${interestRecommendation}` : ""} If you want, I can also suggest the most practical first use case based on your business type.`;
+    return makeReply(
+      `${industryRecommendation}${interestRecommendation ? ` ${interestRecommendation}` : ""} If you want, I can also suggest the most practical first use case based on your business type.`,
+    );
   }
 
   if (/(real estate|estate agency|property)/.test(text)) {
-    return "Real estate is a strong fit for Dravyx AI because speed-to-lead matters so much. We can help with instant response, lead qualification, viewing coordination, and reducing the time it takes for a new enquiry to reach the right agent.";
+    return makeReply(
+      "Real estate is a strong fit for Dravyx AI because speed-to-lead matters so much. We can help with instant response, lead qualification, viewing coordination, and reducing the time it takes for a new enquiry to reach the right agent.",
+    );
   }
 
   if (/(clinic|medical|doctor|dental|wellness|healthcare)/.test(text)) {
-    return "Clinics and wellness businesses are a good fit when the front desk is overloaded with reminders, repeat questions, bookings, and rebooking. Dravyx AI can reduce routine admin so staff can focus on higher-value patient communication.";
+    return makeReply(
+      "Clinics and wellness businesses are a good fit when the front desk is overloaded with reminders, repeat questions, bookings, and rebooking. Dravyx AI can reduce routine admin so staff can focus on higher-value patient communication.",
+    );
   }
 
   if (/(concierge|luxury|premium|hospitality)/.test(text)) {
-    return "Luxury concierge and premium service businesses are a strong fit when clients expect fast, polished replies at any hour. Dravyx AI helps maintain responsiveness without making the customer experience feel robotic.";
+    return makeReply(
+      "Luxury concierge and premium service businesses are a strong fit when clients expect fast, polished replies at any hour. Dravyx AI helps maintain responsiveness without making the customer experience feel robotic.",
+    );
   }
 
   if (/(industry|fit|is this for me|is this suitable|good fit|my business)/.test(text)) {
-    return `Dravyx AI is generally a good fit for service-led businesses that deal with regular enquiries, follow-up, reminders, bookings, or front-office admin. Strong examples include ${joinLabels(industriesList)} and similar teams where response speed and workflow clarity matter.`;
+    return makeReply(
+      `Dravyx AI is generally a good fit for service-led businesses that deal with regular enquiries, follow-up, reminders, bookings, or front-office admin. Strong examples include ${joinLabels(industriesList)} and similar teams where response speed and workflow clarity matter.`,
+    );
   }
 
   if (/(i run|we run|my business is|we are a|i own|we own)/.test(text) && context.industry) {
-    return `${getIndustrySpecificRecommendation(context.industry)} If you want, ask me what Dravyx AI would automate first for that kind of business and I can make it more specific.`;
+    return makeReply(
+      `${getIndustrySpecificRecommendation(context.industry)} If you want, ask me what Dravyx AI would automate first for that kind of business and I can make it more specific.`,
+    );
   }
 
   if (/(replace|team|staff|human)/.test(text)) {
-    return "The goal is not to replace your team. Dravyx AI handles repetitive tasks and first-line communication so your team can focus on higher-value conversations and closing.";
+    return makeReply(
+      "The goal is not to replace your team. Dravyx AI handles repetitive tasks and first-line communication so your team can focus on higher-value conversations and closing.",
+    );
   }
 
   if (/(human handoff|handoff|escalate|complex question)/.test(text)) {
-    return "A good automation should know when to hand things over. Dravyx AI is designed so important or more complex conversations can be routed to a human when needed instead of forcing everything through automation.";
+    return makeReply(
+      "A good automation should know when to hand things over. Dravyx AI is designed so important or more complex conversations can be routed to a human when needed instead of forcing everything through automation.",
+    );
   }
 
   if (/(security|safe|privacy|data)/.test(text)) {
-    return "We keep the approach practical and business-focused. Exact data handling depends on the workflow and tools involved, but the general principle is to use only the systems needed for delivery and keep the setup appropriate to the business context. If data handling is important for your team, that should be covered in scoping.";
+    return makeReply(
+      "We keep the approach practical and business-focused. Exact data handling depends on the workflow and tools involved, but the general principle is to use only the systems needed for delivery and keep the setup appropriate to the business context. If data handling is important for your team, that should be covered in scoping.",
+    );
   }
 
   if (/(contact|book|call|demo|talk|meeting)/.test(text)) {
-    return "You can book a strategy call through the contact page. That is the fastest way to choose the right first workflow and understand what Dravyx AI should automate first for your business.";
+    return makeReply(
+      "You can book a strategy call through the contact page. That is the fastest way to choose the right first workflow and understand what Dravyx AI should automate first for your business.",
+      defaultContactLinkLabel,
+      defaultContactLinkHref,
+    );
   }
 
   if (/(services|offer|do you do|what do you offer|help)/.test(text)) {
-    return `We focus on three core services: ${joinLabels(serviceNames)}. Typical delivery includes ${joinLabels(servicePoints.slice(0, 6))}, depending on the workflow and business need.`;
+    return makeReply(
+      `We focus on three core services: ${joinLabels(serviceNames)}. Typical delivery includes ${joinLabels(servicePoints.slice(0, 6))}, depending on the workflow and business need.`,
+    );
   }
 
   if (/(contact details|email|location|dubai|where are you based)/.test(text)) {
-    return "Dravyx AI is positioned for Dubai-based service businesses. If you want to move forward, the simplest route is the contact page where you can send a project enquiry and book a strategy call.";
+    return makeReply(
+      "Dravyx AI is positioned for Dubai-based service businesses. If you want to move forward, the simplest route is the contact page where you can send a project enquiry and book a strategy call.",
+      defaultContactLinkLabel,
+      defaultContactLinkHref,
+    );
   }
 
   if (/(faq|common question|questions)/.test(text)) {
-    return `The most common questions we get are about who the service is for, what to automate first, setup time, whether it works with current tools, and what happens after launch. If you want, ask me one of those directly and I can answer in more detail.`;
+    return makeReply(
+      `The most common questions we get are about who the service is for, what to automate first, setup time, whether it works with current tools, and what happens after launch. If you want, ask me one of those directly and I can answer in more detail.`,
+    );
   }
 
   const matchingFaq = faqs.find((faq) => text.includes(faq.question.toLowerCase().replace("?", "")));
   if (matchingFaq) {
-    return matchingFaq.answer;
+    return makeReply(matchingFaq.answer);
   }
 
-  return "I can help with that. Dravyx AI is built for service businesses that want faster response, less manual work, and clearer visibility into enquiries, bookings, and follow-up. You can ask me about services, industries, setup time, integrations, pricing, reporting, or the best first workflow to automate.";
+  return makeReply(
+    "Yes, custom integrations are possible as well. If you share the tools you use and what you want the workflow to do, we can review it and recommend the best setup for your business.",
+    defaultContactLinkLabel,
+    defaultContactLinkHref,
+  );
 }
 
 function RobotAvatar({ compact = false }: { compact?: boolean }) {
@@ -322,7 +530,9 @@ export default function AskDravyxChat() {
         {
           id: messageId++,
           role: "bot",
-          text: response,
+          text: response.text,
+          linkLabel: response.linkLabel,
+          linkHref: response.linkHref,
         },
       ]);
       setIsTyping(false);
@@ -364,6 +574,11 @@ export default function AskDravyxChat() {
                 }
               >
                 <p>{message.text}</p>
+                {message.role === "bot" && message.linkLabel && message.linkHref ? (
+                  <a className="ask-dravyx-message-link" href={message.linkHref}>
+                    {message.linkLabel}
+                  </a>
+                ) : null}
               </article>
             ))}
 
