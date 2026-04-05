@@ -142,9 +142,9 @@ export const industries: Industry[] = [
 ];
 
 export const featuredMetrics = [
-  { value: "24/7", label: "reply to new enquiries" },
-  { value: "<1 min", label: "target first response" },
-  { value: "1 flow", label: "to prove value fast" },
+  { value: "24/7", label: "reply coverage" },
+  { value: "<1 min", label: "first response" },
+  { value: "1 flow", label: "fast proof" },
 ];
 
 export const challengePoints = [

@@ -188,20 +188,10 @@ function HomePage() {
       <section className="hero">
         <div className="hero-copy">
           <p className="eyebrow">AI Automation for Dubai Businesses</p>
-          <h1>
-            Turn missed
-            <br />
-            enquiries
-            <br />
-            and manual
-            <br />
-            follow-up into
-            <br />
-            booked business.
-          </h1>
+          <h1>Turn missed enquiries and manual follow-up into booked business.</h1>
           <p className="page-copy">
-            Dravyx AI helps service businesses reply faster, automate routine
-            work, and keep a clear view of leads, bookings, and follow-up.
+            Dravyx AI helps service businesses reply faster, reduce manual work,
+            and stay on top of leads, bookings, and follow-up.
           </p>
           <div className="hero-actions">
             <NavLink className="button button-primary" to="/contact">
@@ -214,11 +204,8 @@ function HomePage() {
         </div>
         <div className="hero-panel">
           <div className="hero-badge">Simple First Step</div>
-          <h2>Start with one workflow that saves time or wins more leads.</h2>
-          <p>
-            We focus on the first automation that will make a visible difference
-            quickly.
-          </p>
+          <h2>Start with one workflow that proves value fast.</h2>
+          <p>We build one automation that delivers a clear result fast.</p>
           <div className="metric-stack">
             {featuredMetrics.map((item) => (
               <div className="metric-row" key={item.label}>
@@ -226,21 +213,6 @@ function HomePage() {
                 <span>{item.label}</span>
               </div>
             ))}
-          </div>
-          <div className="pipeline-card">
-            <span className="mini-label">Typical flow</span>
-            <div className="pipeline-step">
-              <strong>Enquiry comes in</strong>
-              <span>Now</span>
-            </div>
-            <div className="pipeline-step">
-              <strong>Dravyx replies and qualifies</strong>
-              <span>Fast</span>
-            </div>
-            <div className="pipeline-step">
-              <strong>Your team gets a clean handoff</strong>
-              <span>Ready</span>
-            </div>
           </div>
         </div>
       </section>
@@ -737,6 +709,7 @@ function Layout() {
               </svg>
             </SocialIconLink>
           </div>
+          <p className="footer-note">© 2026 Dravyx AI. All rights reserved.</p>
         </div>
       </footer>
     </div>
