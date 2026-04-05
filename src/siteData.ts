@@ -47,10 +47,10 @@ export const navigation: NavItem[] = [
 ];
 
 export const heroStats = [
-  { value: "24/7", label: "agent coverage" },
-  { value: "<60s", label: "lead response target" },
-  { value: "3-layer", label: "interaction, action, insight" },
-  { value: "Dubai", label: "local market positioning" },
+  { value: "24/7", label: "lead response coverage" },
+  { value: "<1 min", label: "target first reply" },
+  { value: "Less admin", label: "for your front desk" },
+  { value: "Clear reports", label: "every month" },
 ];
 
 export const integrationTools = [
@@ -59,26 +59,17 @@ export const integrationTools = [
   "WhatsApp",
   "Twilio",
   "Calendly",
+  "Google Sheets",
   "Slack",
-  "OpenAI",
   "n8n",
-];
-
-export const realityChecks = [
-  {
-    title: "Speed now shapes trust.",
-    text: "The first business to respond usually earns the first serious conversation.",
-  },
-  {
-    title: "Manual ops slow growth.",
-    text: "Admin-heavy follow-up and disconnected tools quietly reduce conversion and visibility.",
-  },
+  "OpenAI",
 ];
 
 export const fitSignals = [
-  "Missed or delayed lead follow-up is costing you revenue.",
-  "Your team is spending too much time on repetitive coordination.",
-  "You want clearer reporting without adding more manual work.",
+  "You handle calls, WhatsApp messages, form leads, or website chats every day.",
+  "Your team loses time on follow-up, reminders, and manual updates.",
+  "You want more bookings without growing headcount at the same speed.",
+  "You want one clear view of enquiries, response time, and conversions.",
 ];
 
 export const serviceCards: ServiceCard[] = [
@@ -127,43 +118,47 @@ export const industries: Industry[] = [
   {
     name: "Real Estate",
     problem:
-      "Lead response is slow and competitors get there first.",
+      "Leads go cold when response is slow.",
     solution:
-      "An AI broker qualifies and books viewings instantly.",
-    edge: "Best first vertical for fast proof.",
+      "Dravyx replies instantly, qualifies buyers, and books viewings faster.",
+    edge: "Strong fit for speed-to-lead improvement.",
   },
   {
     name: "Clinics & Wellness",
     problem:
-      "No-shows and front-desk admin keep hurting throughput.",
+      "Front-desk teams lose time to reminders, FAQs, and rebooking.",
     solution:
-      "An AI coordinator handles reminders, rebooking, and FAQs.",
-    edge: "Strong recurring retainer fit.",
+      "Dravyx handles reminders, rebooking, and routine questions automatically.",
+    edge: "Good fit where admin pressure is high.",
   },
   {
     name: "Luxury Concierge",
     problem:
-      "Premium guests expect instant, polished replies.",
+      "Premium clients expect quick, polished replies at any hour.",
     solution:
-      "A brand-tuned guest agent handles requests with speed and tone.",
-    edge: "Premium positioning supports higher retainers.",
+      "Dravyx handles first response and routing without losing brand tone.",
+    edge: "Best for high-touch businesses that cannot afford delays.",
   },
 ];
 
 export const featuredMetrics = [
-  { value: "24/7", label: "coverage" },
-  { value: "<60s", label: "response target" },
-  { value: "5+", label: "qualified bookings" },
+  { value: "24/7", label: "reply to new enquiries" },
+  { value: "<1 min", label: "target first response" },
+  { value: "1 flow", label: "to prove value fast" },
 ];
 
 export const challengePoints = [
   {
-    title: "Focused pilot",
-    text: "One clear launch offer with a measurable commercial outcome.",
+    title: "Fast setup",
+    text: "Start with one high-impact workflow instead of a big transformation project.",
   },
   {
-    title: "Clear reporting",
-    text: "Simple metrics around response time, qualification, and bookings.",
+    title: "Works with your tools",
+    text: "We plug into the systems your team already uses where possible.",
+  },
+  {
+    title: "Clear monthly reporting",
+    text: "You see enquiries, response time, bookings, and next actions in one view.",
   },
 ];
 
@@ -171,26 +166,26 @@ export const resultStories: ResultStory[] = [
   {
     category: "Voice Agent",
     vertical: "Estate Agency",
-    headline: "Viewing enquiries answered in under a minute.",
+    headline: "Faster replies can turn more enquiries into viewings.",
     summary:
-      "Capture after-hours demand and move it into the calendar faster.",
-    metrics: ["<60s speed to lead", "3x more booked viewings", "24/7 lead capture"],
+      "Useful when every missed call or delayed reply means lost pipeline.",
+    metrics: ["24/7 lead capture", "Faster viewing bookings", "Less manual chasing"],
   },
   {
-    category: "Voice Agent",
+    category: "Automation",
     vertical: "Clinic",
-    headline: "Reminder workflows reduce no-shows and free staff time.",
+    headline: "Reminder and rebooking flows reduce front-desk pressure.",
     summary:
-      "Patients get reminders and rebooking support without front-desk overload.",
-    metrics: ["62% fewer no-shows", "800+ calls/week handled", "2 FTE worth of admin freed"],
+      "Useful when teams are overloaded by reminders, FAQs, and repeat admin.",
+    metrics: ["Fewer no-shows", "Less staff time on routine calls", "Cleaner scheduling"],
   },
   {
-    category: "Voice Agent + Automation",
+    category: "Service Experience",
     vertical: "Concierge",
-    headline: "Premium guest requests handled instantly.",
+    headline: "Instant replies help premium brands feel more responsive.",
     summary:
-      "The first response feels polished, immediate, and on-brand.",
-    metrics: ["3 languages supported", "0 missed after-hours requests", "VIP escalation workflows"],
+      "Useful when speed, tone, and clean handoff matter as much as availability.",
+    metrics: ["After-hours coverage", "On-brand communication", "Better request routing"],
   },
 ];
 
@@ -198,61 +193,61 @@ export const processSteps: ProcessStep[] = [
   {
     step: "01",
     title: "Strategy Call",
-    text: "We identify the first workflow worth fixing.",
+    text: "We find the first workflow that will save time or recover revenue fastest.",
   },
   {
     step: "02",
-    title: "Solution Blueprint",
-    text: "You get a focused scope, timeline, and success metrics.",
+    title: "Plan & Scope",
+    text: "You get a clear plan, timeline, and the success metrics we will track.",
   },
   {
     step: "03",
     title: "Build & Test",
-    text: "We build, test, and refine the workflow before launch.",
+    text: "We set it up, test it, and make sure the handoffs work properly.",
   },
   {
     step: "04",
     title: "Go Live & Optimize",
-    text: "We launch, monitor, and improve based on real usage.",
+    text: "We launch, monitor performance, and improve based on real enquiries.",
   },
 ];
 
 export const principles = [
-  "Commercial outcomes before AI theatrics",
-  "One clear MVP before broader transformation",
-  "Human escalation when trust matters",
-  "Reporting built in, not bolted on later",
+  "Start with one clear business problem",
+  "Keep the experience simple for your customers",
+  "Send important conversations to humans when needed",
+  "Track results from day one",
 ];
 
 export const faqs: FAQItem[] = [
   {
-    question: "Who is Drash for?",
+    question: "Who is Dravyx AI for?",
     answer:
-      "Drash is built for service businesses that need faster lead response, less repetitive admin, and clearer reporting without scaling headcount at the same rate.",
+      "Dravyx AI is for service businesses that want faster lead response, less repetitive admin, and clearer visibility into enquiries and bookings.",
   },
   {
-    question: "What should we build first?",
+    question: "What should we automate first?",
     answer:
-      "For Dubai, the strongest first offer is usually a real-estate lead response engine on WhatsApp, web chat, or phone. It is easy to prove value quickly through response time and booked appointments.",
+      "Usually the best first step is the workflow closest to revenue: missed calls, lead follow-up, booking, reminders, or CRM updates.",
   },
   {
-    question: "How fast can results appear?",
+    question: "How long does setup take?",
     answer:
-      "Focused agent and automation systems can go live in weeks. The fastest wins usually come from speed-to-lead improvement, missed-call recovery, reminders, and cleaner handoffs into CRM.",
+      "Focused setups can usually go live in a few weeks. Simpler flows move faster, especially when the tools and process are already clear.",
   },
   {
-    question: "Do you replace the team?",
+    question: "Will this replace my team?",
     answer:
-      "No. The system handles repetitive contact, routing, and reporting so humans spend time on higher-value conversations, escalation, and closing.",
+      "No. Dravyx AI handles repetitive tasks and first-line communication so your team can focus on higher-value conversations and closing.",
   },
   {
-    question: "Can this work with our existing tools?",
+    question: "Can this work with our current tools?",
     answer:
-      "Yes. We design around the tools you already use where possible, then automate the handoffs between them rather than forcing a full platform replacement on day one.",
+      "Yes. We try to work with your current CRM, calendar, forms, and communication channels instead of forcing a full replacement on day one.",
   },
   {
     question: "What happens after launch?",
     answer:
-      "We monitor, refine, and report. Strong automation is an operating layer, not a one-off asset, so post-launch optimization is part of the value.",
+      "We monitor performance, refine the flow, and review the numbers with you so the system keeps improving after it goes live.",
   },
 ];
