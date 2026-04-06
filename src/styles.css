@@ -663,6 +663,7 @@ h3 {
 
 .contact-shell {
   grid-template-columns: minmax(280px, 0.86fr) minmax(320px, 1.14fr);
+  grid-template-areas: "sidebar form";
   gap: 20px;
   align-items: start;
 }
@@ -843,6 +844,7 @@ h3 {
 }
 
 .contact-sidebar {
+  grid-area: sidebar;
   display: grid;
   gap: 16px;
   align-content: start;
@@ -902,6 +904,7 @@ h3 {
 }
 
 .contact-form-card {
+  grid-area: form;
   padding: 22px 22px 20px;
 }
 
@@ -1507,7 +1510,10 @@ h3 {
   }
 
   .contact-shell {
-    grid-template-columns: minmax(250px, 0.88fr) minmax(300px, 1.12fr);
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "form"
+      "sidebar";
     gap: 18px;
   }
 
@@ -1677,6 +1683,40 @@ h3 {
   .contact-intro h1 {
     font-size: clamp(2rem, 8vw, 3rem);
     max-width: 100%;
+  }
+
+  .contact-shell {
+    gap: 16px;
+  }
+
+  .contact-sidebar {
+    gap: 14px;
+  }
+
+  .contact-intro {
+    gap: 10px;
+    padding: 0;
+  }
+
+  .contact-intro .page-copy {
+    max-width: 100%;
+  }
+
+  .contact-form {
+    gap: 12px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 13px 14px;
+  }
+
+  .contact-form textarea {
+    min-height: 112px;
+  }
+
+  .contact-form-card h2 {
+    margin-bottom: 10px;
   }
 
   .about-intro h1 {
