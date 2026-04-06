@@ -1625,13 +1625,13 @@ h3 {
 
   .ask-dravyx-shell {
     right: 12px;
-    left: 12px;
+    left: auto;
     bottom: 12px;
-    justify-items: stretch;
+    justify-items: end;
   }
 
   .ask-dravyx-panel {
-    width: 100%;
+    width: min(380px, calc(100vw - 24px));
   }
 
   .ask-dravyx-toggle {
