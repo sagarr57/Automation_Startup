@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { faqs, industries, integrationTools, processSteps, serviceCards } from "./siteData";
 
 type ChatMessage = {
@@ -575,9 +576,9 @@ export default function AskDravyxChat() {
               >
                 <p>{message.text}</p>
                 {message.role === "bot" && message.linkLabel && message.linkHref ? (
-                  <a className="ask-dravyx-message-link" href={message.linkHref}>
+                  <Link className="ask-dravyx-message-link" to={message.linkHref} onClick={() => setIsOpen(false)}>
                     {message.linkLabel}
-                  </a>
+                  </Link>
                 ) : null}
               </article>
             ))}
