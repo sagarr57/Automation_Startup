@@ -1,6 +1,11 @@
 import { FormEvent, ReactNode, useEffect, useState } from "react";
-import { NavLink, Route, Routes, useLocation } from "react-router-dom";
+import { NavLink, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import AskDravyxChat from "./AskDravyxChat";
+import { AdminLayout } from "./admin/AdminLayout";
+import { AdminDashboardPage } from "./admin/AdminDashboardPage";
+import { AdminLoginPage } from "./admin/AdminLoginPage";
+import { RequireAdminAuth } from "./admin/RequireAdminAuth";
+import { getSupabase, isSupabaseConfigured } from "./lib/supabaseClient";
 import {
   faqs,
   featuredMetrics,
@@ -139,10 +144,6 @@ function SocialIconLink({
   );
 }
 
-function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
-  event.preventDefault();
-}
-
 const seoByPath: Record<string, { title: string; description: string }> = {
   "/": {
     title: "Dravyx AI | AI Automation for Dubai Service Businesses",
@@ -178,6 +179,14 @@ const seoByPath: Record<string, { title: string; description: string }> = {
     title: "Contact | Dravyx AI",
     description:
       "Book a strategy call with Dravyx AI to choose the right first workflow for response, follow-up, and growth.",
+  },
+  "/admin": {
+    title: "Admin | Dravyx AI",
+    description: "Internal enquiries dashboard for Dravyx AI.",
+  },
+  "/admin/login": {
+    title: "Admin sign in | Dravyx AI",
+    description: "Secure sign-in for the Dravyx AI admin dashboard.",
   },
   "/privacy-policy": {
     title: "Privacy Policy | Dravyx AI",
@@ -521,6 +530,47 @@ function FAQPage() {
 }
 
 function ContactPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [errorText, setErrorText] = useState<string | null>(null);
+
+  async function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setErrorText(null);
+
+    if (!isSupabaseConfigured()) {
+      setStatus("error");
+      setErrorText(
+        "This form is not connected yet. Please email us directly or try again later.",
+      );
+      return;
+    }
+
+    setStatus("sending");
+    const supabase = getSupabase();
+    const { error } = await supabase.from("enquiries").insert({
+      name: name.trim(),
+      email: email.trim(),
+      company: company.trim() || null,
+      message: message.trim(),
+    });
+
+    if (error) {
+      setStatus("error");
+      setErrorText(error.message);
+      return;
+    }
+
+    setStatus("success");
+    setName("");
+    setEmail("");
+    setCompany("");
+    setMessage("");
+  }
+
   return (
     <>
       <section className="contact-shell">
@@ -544,28 +594,72 @@ function ContactPage() {
         </div>
         <div className="contact-card contact-form-card">
           <h2>Project enquiry</h2>
+          {!isSupabaseConfigured() ? (
+            <p className="contact-form-note">
+              Online submissions are temporarily unavailable. Please use the email on this page or reach out via
+              LinkedIn.
+            </p>
+          ) : null}
+          {status === "success" ? (
+            <p className="contact-form-success" role="status">
+              Thanks, we received your enquiry. We will get back to you shortly.
+            </p>
+          ) : null}
+          {status === "error" && errorText ? (
+            <p className="contact-form-error" role="alert">
+              {errorText}
+            </p>
+          ) : null}
           <form className="contact-form" onSubmit={handleContactSubmit}>
             <label>
               <span>Name</span>
-              <input type="text" placeholder="Your name" />
+              <input
+                type="text"
+                name="name"
+                placeholder="Your name"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                required
+                disabled={status === "sending"}
+              />
             </label>
             <label>
               <span>Email</span>
-              <input type="email" placeholder="you@company.com" />
+              <input
+                type="email"
+                name="email"
+                placeholder="you@company.com"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
+                disabled={status === "sending"}
+              />
             </label>
             <label>
               <span>Company</span>
-              <input type="text" placeholder="Company name" />
+              <input
+                type="text"
+                name="company"
+                placeholder="Company name"
+                value={company}
+                onChange={(event) => setCompany(event.target.value)}
+                disabled={status === "sending"}
+              />
             </label>
             <label>
               <span>What do you want to automate first?</span>
               <textarea
+                name="message"
                 rows={4}
                 placeholder="Lead response, reminders, CRM updates, reporting..."
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
+                required
+                disabled={status === "sending"}
               />
             </label>
-            <button className="button button-primary" type="submit">
-              Send enquiry
+            <button className="button button-primary" type="submit" disabled={status === "sending"}>
+              {status === "sending" ? "Sending…" : "Send enquiry"}
             </button>
           </form>
         </div>
@@ -588,7 +682,8 @@ function PrivacyPolicyPage() {
           <p>
             We may collect your name, email address, company details, and any
             project information you share through the contact form or direct
-            outreach.
+            outreach. Contact form submissions are stored securely so our team can
+            respond to your enquiry.
           </p>
           <p>
             If you use the website chat assistant, we may also receive the
@@ -650,12 +745,11 @@ function TermsPage() {
   );
 }
 
-function Layout() {
+function MarketingLayout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="site-shell">
-      <RouteSeo />
       <header className="site-header">
         <NavLink className="brand-link" to="/">
           <BrandLockup full />
@@ -697,17 +791,7 @@ function Layout() {
       </header>
 
       <main className="main-content">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/results" element={<ResultsPage />} />
-          <Route path="/how-it-works" element={<HowItWorksPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/faq" element={<FAQPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-          <Route path="/terms-and-conditions" element={<TermsPage />} />
-        </Routes>
+        <Outlet />
       </main>
 
       <footer className="site-footer">
@@ -751,5 +835,33 @@ function Layout() {
 }
 
 export default function App() {
-  return <Layout />;
+  return (
+    <>
+      <RouteSeo />
+      <Routes>
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="login" element={<AdminLoginPage />} />
+          <Route
+            index
+            element={
+              <RequireAdminAuth>
+                <AdminDashboardPage />
+              </RequireAdminAuth>
+            }
+          />
+        </Route>
+        <Route element={<MarketingLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/results" element={<ResultsPage />} />
+          <Route path="/how-it-works" element={<HowItWorksPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/faq" element={<FAQPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms-and-conditions" element={<TermsPage />} />
+        </Route>
+      </Routes>
+    </>
+  );
 }
