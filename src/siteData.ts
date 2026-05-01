@@ -46,13 +46,6 @@ export const navigation: NavItem[] = [
   { label: "FAQ", to: "/faq" },
 ];
 
-export const heroStats = [
-  { value: "24/7", label: "lead response coverage" },
-  { value: "<1 min", label: "target first reply" },
-  { value: "Less admin", label: "for your front desk" },
-  { value: "Clear reports", label: "every month" },
-];
-
 export const integrationTools = [
   "HubSpot",
   "Zoho",
@@ -145,21 +138,6 @@ export const featuredMetrics = [
   { value: "24/7", label: "reply coverage" },
   { value: "<1 min", label: "first response" },
   { value: "1 flow", label: "fast proof" },
-];
-
-export const challengePoints = [
-  {
-    title: "Fast setup",
-    text: "Start with one high-impact workflow instead of a big transformation project.",
-  },
-  {
-    title: "Works with your tools",
-    text: "We plug into the systems your team already uses where possible.",
-  },
-  {
-    title: "Clear monthly reporting",
-    text: "You see enquiries, response time, bookings, and next actions in one view.",
-  },
 ];
 
 export const resultStories: ResultStory[] = [

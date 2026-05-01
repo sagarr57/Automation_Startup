@@ -1,0 +1,378 @@
+@media (max-width: 980px) {
+  .site-footer,
+  .about-top,
+  .content-grid,
+  .compact,
+  .contact-shell,
+  .two-column,
+  .card-grid,
+  .services-grid,
+  .process-preview,
+  .feature-card-grid,
+  .two-card-grid,
+  .challenge-grid,
+  .process-grid,
+  .stat-strip,
+  .cta-banner {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer {
+    position: static;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-meta,
+  .footer-links {
+    justify-items: start;
+    justify-content: flex-start;
+  }
+
+  .footer-note {
+    text-align: left;
+  }
+
+  .ask-dravyx-shell {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .ask-dravyx-toggle {
+    width: 56px;
+    min-width: 56px;
+    height: 56px;
+  }
+
+  .home-services-intro {
+    max-width: 100%;
+  }
+
+  .logo-strip-header h2 {
+    max-width: none;
+  }
+
+  .card-grid,
+  .services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contact-shell {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "form"
+      "sidebar";
+    gap: 18px;
+  }
+
+  .about-intro h1 {
+    max-width: 13ch;
+  }
+
+  .about-highlights {
+    padding-top: 36px;
+  }
+
+  .contact-intro h1 {
+    max-width: 13ch;
+  }
+
+  .process-preview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-process-intro {
+    max-width: 100%;
+  }
+
+  .home-fit-section {
+    gap: 28px;
+  }
+
+  .home-fit-intro {
+    max-width: 100%;
+  }
+
+  .site-header {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    width: 100%;
+  }
+
+  .mobile-menu-toggle {
+    display: inline-flex;
+  }
+
+  .site-nav {
+    display: none;
+  }
+
+  .site-nav-open {
+    display: grid;
+    grid-column: 1 / -1;
+    width: 100%;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .nav-link {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .hero {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 300px);
+    min-height: auto;
+    padding-top: 6px;
+    max-height: none;
+    gap: 20px;
+    justify-content: space-between;
+  }
+
+  .hero-copy {
+    max-width: 100%;
+  }
+
+  .hero-panel {
+    max-width: 300px;
+    justify-self: start;
+  }
+
+  .feature-card-wide {
+    grid-column: auto;
+  }
+
+  .cta-actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 840px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    justify-content: stretch;
+  }
+
+  .hero-panel {
+    max-width: 100%;
+    justify-self: stretch;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-shell {
+    width: min(100% - 20px, 1200px);
+    padding-top: 10px;
+  }
+
+  .site-header {
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    padding: 12px 14px;
+  }
+
+  .ask-dravyx-shell {
+    right: 12px;
+    left: auto;
+    bottom: 12px;
+    justify-items: end;
+  }
+
+  .ask-dravyx-panel {
+    width: min(380px, calc(100vw - 24px));
+  }
+
+  .ask-dravyx-toggle {
+    justify-content: center;
+  }
+
+  .ask-dravyx-toggle-copy {
+    display: none;
+  }
+
+  .ask-dravyx-form {
+    grid-template-columns: 1fr;
+  }
+
+  .ask-dravyx-send {
+    min-height: 46px;
+  }
+
+  .brand-copy span {
+    font-size: 1.02rem;
+  }
+
+  .brand-copy small {
+    font-size: 0.6rem;
+  }
+
+  .brand-mark {
+    width: 122px;
+    height: auto;
+  }
+
+  .brand-full-mark {
+    height: 56px;
+    max-width: min(260px, 58vw);
+  }
+
+  .hero h1,
+  .page-hero h1 {
+    font-size: clamp(2.1rem, 8.6vw, 3rem);
+    max-width: 100%;
+  }
+
+  .contact-intro h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+    max-width: 100%;
+  }
+
+  .contact-shell {
+    gap: 16px;
+  }
+
+  .contact-sidebar {
+    gap: 14px;
+  }
+
+  .contact-intro {
+    gap: 10px;
+    padding: 0;
+  }
+
+  .contact-intro .page-copy {
+    max-width: 100%;
+  }
+
+  .contact-form {
+    gap: 12px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 13px 14px;
+  }
+
+  .contact-form textarea {
+    min-height: 112px;
+  }
+
+  .contact-form-card h2 {
+    margin-bottom: 10px;
+  }
+
+  .about-intro h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+    max-width: 100%;
+  }
+
+  .about-highlights {
+    padding-top: 0;
+  }
+
+  .page-hero {
+    padding-top: 4px;
+  }
+
+  .section-heading h2,
+  .cta-banner h2 {
+    max-width: 100%;
+  }
+
+  .button,
+  .site-nav,
+  .site-nav-open {
+    width: 100%;
+  }
+
+  .hero {
+    min-height: calc(100svh - 112px);
+    align-content: start;
+    gap: 18px;
+  }
+
+  .logo-strip-compact {
+    margin-top: 0;
+    padding: 16px 0;
+  }
+
+  .logo-strip-header {
+    padding: 0 18px;
+    margin-bottom: 12px;
+  }
+
+  .logo-marquee-track {
+    padding: 0 18px;
+    gap: 10px;
+    animation-duration: 24s;
+  }
+
+  .card-grid,
+  .services-grid,
+  .process-preview {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-copy {
+    max-width: 100%;
+  }
+
+  .hero-actions {
+    margin-top: 18px;
+    gap: 10px;
+  }
+
+  .hero-panel {
+    max-width: 100%;
+    justify-self: stretch;
+    padding: 16px;
+    margin-top: 28px;
+  }
+
+  .metric-stack {
+    grid-template-columns: 1fr;
+  }
+
+  .page-copy {
+    font-size: 0.94rem;
+    line-height: 1.65;
+  }
+
+  .main-content {
+    gap: 48px;
+    padding-top: 12px;
+  }
+
+  .stat-card,
+  .card,
+  .challenge-card,
+  .process-card,
+  .faq-card,
+  .contact-card,
+  .band-card,
+  .feature-card,
+  .result-card {
+    padding: 18px;
+  }
+
+  .stat-strip {
+    gap: 12px;
+  }
+
+  .feature-band,
+  .cta-banner,
+  .logo-strip {
+    padding: 18px;
+  }
+
+  .two-card-grid,
+  .feature-card-grid {
+    gap: 14px;
+  }
+}
