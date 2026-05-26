@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { faqs, industries, integrationTools, processSteps, serviceCards } from "./siteData";
 
@@ -502,32 +502,66 @@ export default function AskDravyxChat() {
     };
   }, []);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: { preventDefault(): void }) {
     event.preventDefault();
 
     const trimmed = input.trim();
-    if (!trimmed || isTyping) {
-      return;
-    }
+    if (!trimmed || isTyping) return;
 
-    const userMessage: ChatMessage = {
-      id: messageId++,
-      role: "user",
-      text: trimmed,
-    };
+    const userMessage: ChatMessage = { id: messageId++, role: "user", text: trimmed };
+    const updatedMessages = [...messages, userMessage];
 
-    setMessages((current) => [...current, userMessage]);
+    setMessages(updatedMessages);
     setInput("");
     setIsTyping(true);
 
+    // Try Claude API first
+    try {
+      const apiMessages = updatedMessages.map((m) => ({
+        role: m.role === "bot" ? ("assistant" as const) : ("user" as const),
+        content: m.text,
+      }));
+
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: apiMessages }),
+      });
+
+      const data = await res.json() as { text?: string; error?: string };
+
+      if (res.ok && data.text) {
+        const replyText = data.text;
+        setMessages((cur) => [
+          ...cur,
+          {
+            id: messageId++,
+            role: "bot",
+            text: replyText,
+            linkLabel: /book|contact|strategy call|enquiry|reach out|get in touch|schedule|talk to us|speak to|call us|message us|whatsapp/i.test(replyText)
+              ? defaultContactLinkLabel
+              : undefined,
+            linkHref: /book|contact|strategy call|enquiry|reach out|get in touch|schedule|talk to us|speak to|call us|message us|whatsapp/i.test(replyText)
+              ? defaultContactLinkHref
+              : undefined,
+          },
+        ]);
+        setIsTyping(false);
+        return;
+      }
+    } catch {
+      // fall through to rule-based
+    }
+
+    // Rule-based fallback
     const nextContext = inferConversationContext(trimmed, context);
     setContext(nextContext);
     const response = getDravyxAnswer(trimmed, nextContext);
-    const typingDelay = 2200 + Math.floor(Math.random() * 700);
+    const delay = 1400 + Math.floor(Math.random() * 600);
 
     timerRef.current = window.setTimeout(() => {
-      setMessages((current) => [
-        ...current,
+      setMessages((cur) => [
+        ...cur,
         {
           id: messageId++,
           role: "bot",
@@ -538,7 +572,7 @@ export default function AskDravyxChat() {
       ]);
       setIsTyping(false);
       timerRef.current = null;
-    }, typingDelay);
+    }, delay);
   }
 
   return (

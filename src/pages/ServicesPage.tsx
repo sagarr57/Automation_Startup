@@ -1,6 +1,7 @@
-import { IntegrationsStrip } from "../components/IntegrationsStrip";
+import { CtaBanner, defaultPrimaryCta } from "../components/CtaBanner";
 import { PageHero } from "../components/PageHero";
 import { SectionIntro } from "../components/SectionIntro";
+import { ServiceCard } from "../components/ServiceCard";
 import { industries, serviceCards } from "../siteData";
 
 export function ServicesPage() {
@@ -13,18 +14,7 @@ export function ServicesPage() {
       />
       <section className="services-grid">
         {serviceCards.map((service) => (
-          <article className="card large-card service-panel" key={service.title}>
-            <p className="mini-label">{service.index}</p>
-            <h2>{service.title}</h2>
-            <p className="card-tagline">{service.tagline}</p>
-            <p>{service.summary}</p>
-            <ul>
-              {service.points.map((point) => (
-                <li key={point}>{point}</li>
-              ))}
-            </ul>
-            <p className="launch-window">{service.launchWindow}</p>
-          </article>
+          <ServiceCard key={service.title} service={service} variant="full" />
         ))}
       </section>
       <section className="content-grid">
@@ -44,7 +34,12 @@ export function ServicesPage() {
           ))}
         </div>
       </section>
-      <IntegrationsStrip />
+      <CtaBanner
+        eyebrow="Ready To Start"
+        title="Pick the service that matches your biggest workflow gap and book a strategy call."
+        primary={defaultPrimaryCta}
+        secondary={{ label: "See results", to: "/results" }}
+      />
     </>
   );
 }

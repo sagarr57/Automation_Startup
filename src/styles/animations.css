@@ -21,3 +21,39 @@
     transform: translateX(calc(-50% - 6px));
   }
 }
+
+@keyframes waPulse {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0;
+    transform: scale(1.55);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .logo-marquee-track,
+  .whatsapp-float-wrapper::before {
+    animation: none !important;
+  }
+
+  .ask-dravyx-typing span {
+    animation: none !important;
+  }
+
+  .button:hover,
+  .social-link:hover,
+  .whatsapp-float:hover,
+  .nav-link,
+  .footer-contact-item {
+    transition: none;
+  }
+}

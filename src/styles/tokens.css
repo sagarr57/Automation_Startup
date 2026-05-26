@@ -92,8 +92,8 @@ h3 {
 .faq-card,
 .contact-card,
 .hero-panel,
-.challenge-card,
-.stat-card {
+.waiting-cost-card,
+.process-card {
   backdrop-filter: blur(18px);
   background: var(--panel);
   border: 1px solid var(--panel-border);

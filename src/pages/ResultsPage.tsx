@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { CtaBanner, defaultPrimaryCta } from "../components/CtaBanner";
 import { PageHero } from "../components/PageHero";
 import { resultStories } from "../siteData";
 
@@ -6,13 +6,13 @@ export function ResultsPage() {
   return (
     <>
       <PageHero
-        eyebrow="Results"
-        title="Examples of where Dravyx AI creates practical business value."
-        description="The focus stays simple: faster replies, cleaner follow-up, fewer missed opportunities, and better visibility into what is working."
+        eyebrow="What to Expect"
+        title="The outcomes Dravyx AI is built to deliver."
+        description="Every engagement is designed around one measurable improvement — faster response, cleaner follow-up, or reduced admin. Here is what that looks like across different industries."
       />
-      <section className="card-grid">
+      <section className="results-card-grid card-grid">
         {resultStories.map((story) => (
-          <article className="card" key={story.vertical}>
+          <article className="card result-card" key={story.vertical}>
             <p className="mini-label">
               {story.category} / {story.vertical}
             </p>
@@ -26,17 +26,11 @@ export function ResultsPage() {
           </article>
         ))}
       </section>
-      <section className="cta-banner page-cta">
-        <div>
-          <p className="eyebrow">Need Similar Results</p>
-          <h2>Start with the workflow that affects enquiries, bookings, or follow-up first.</h2>
-        </div>
-        <div className="cta-actions">
-          <NavLink className="button button-primary" to="/contact">
-            Book a strategy call
-          </NavLink>
-        </div>
-      </section>
+      <CtaBanner
+        eyebrow="Ready to See This in Your Business"
+        title="Start with the workflow that affects enquiries, bookings, or follow-up first."
+        primary={defaultPrimaryCta}
+      />
     </>
   );
 }

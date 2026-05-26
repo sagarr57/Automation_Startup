@@ -1,3 +1,4 @@
+import { CtaBanner, defaultPrimaryCta } from "../components/CtaBanner";
 import { PageHero } from "../components/PageHero";
 
 export function TermsPage() {
@@ -31,6 +32,11 @@ export function TermsPage() {
           </p>
         </article>
       </section>
+      <CtaBanner
+        eyebrow="Ready To Discuss a Project"
+        title="Terms are agreed in writing once scope is clear — book a call to get started."
+        primary={defaultPrimaryCta}
+      />
     </>
   );
 }

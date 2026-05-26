@@ -10,9 +10,9 @@ export const seoByPath: Record<string, { title: string; description: string }> =
       "Explore Dravyx AI services including AI voice agents, workflow automation, and strategic reporting for service businesses.",
   },
   "/results": {
-    title: "Results | Dravyx AI Use Cases and Outcomes",
+    title: "What to Expect | Dravyx AI Outcomes and Delivery",
     description:
-      "See how Dravyx AI helps improve response time, follow-up, bookings, and operational visibility for service-led businesses.",
+      "See what Dravyx AI delivers: faster lead response, cleaner follow-up, reduced admin, and clear visibility into enquiries and bookings.",
   },
   "/how-it-works": {
     title: "How It Works | Dravyx AI",

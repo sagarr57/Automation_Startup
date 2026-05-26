@@ -1,3 +1,20 @@
+export const calendlyUrl = "https://calendly.com/hello-dravyx/30min";
+
+export const contactChannels = {
+  email: {
+    href: "mailto:hello.dravyx@gmail.com",
+    label: "hello.dravyx@gmail.com",
+  },
+  whatsapp: {
+    href: "https://wa.me/971553084546",
+    label: "+971 55 308 4546",
+  },
+  instagram: {
+    href: "https://www.instagram.com/dravyx.ai",
+    label: "@dravyx.ai",
+  },
+} as const;
+
 export type NavItem = {
   label: string;
   to: string;
@@ -7,6 +24,7 @@ export type ServiceCard = {
   index: string;
   title: string;
   tagline: string;
+  scenario: string;
   summary: string;
   launchWindow: string;
   points: string[];
@@ -48,14 +66,52 @@ export const navigation: NavItem[] = [
 
 export const integrationTools = [
   "HubSpot",
+  "Salesforce",
   "Zoho",
+  "Pipedrive",
+  "GoHighLevel",
   "WhatsApp",
+  "Telegram",
+  "Facebook Messenger",
+  "Instagram",
   "Twilio",
-  "Calendly",
-  "Google Sheets",
   "Slack",
+  "Microsoft Teams",
+  "Gmail",
+  "ActiveCampaign",
+  "Mailchimp",
+  "Brevo",
+  "SendGrid",
+  "Calendly",
+  "Google Workspace",
+  "Microsoft 365",
+  "Google Sheets",
+  "Airtable",
+  "Notion",
+  "Monday.com",
+  "ClickUp",
+  "Trello",
+  "Asana",
+  "Jira",
   "n8n",
+  "Make",
+  "Zapier",
+  "Pipedream",
   "OpenAI",
+  "Stripe",
+  "Xero",
+  "QuickBooks",
+  "Shopify",
+  "WooCommerce",
+  "Typeform",
+  "Jotform",
+  "Google Forms",
+  "Intercom",
+  "Zendesk",
+  "Freshdesk",
+  "DocuSign",
+  "Webflow",
+  "WordPress",
 ];
 
 export const fitSignals = [
@@ -70,6 +126,8 @@ export const serviceCards: ServiceCard[] = [
     index: "01",
     title: "Voice Agents",
     tagline: "Never miss the first conversation.",
+    scenario:
+      "Picture this: a potential client calls at 10pm on a Thursday. Instead of voicemail, they speak to your AI agent, get qualified, and book a viewing — before your competitor wakes up.",
     summary:
       "Always-on phone and WhatsApp agents that respond instantly, qualify inbound demand, and book next steps in Arabic and English.",
     launchWindow: "Live in 2-4 weeks",
@@ -83,6 +141,8 @@ export const serviceCards: ServiceCard[] = [
     index: "02",
     title: "Intelligent Automation",
     tagline: "Connect the tools you already use.",
+    scenario:
+      "Picture this: a lead fills your website form at noon. Within 30 seconds, your CRM is updated, a WhatsApp follow-up is sent, and your team is notified — without anyone lifting a finger.",
     summary:
       "Workflow systems that sync CRM, forms, calendars, notifications, documents, and follow-up into one operating layer.",
     launchWindow: "Results in 2-3 weeks",
@@ -96,6 +156,8 @@ export const serviceCards: ServiceCard[] = [
     index: "03",
     title: "Strategic BI Reporting",
     tagline: "Turn workflow data into board-level clarity.",
+    scenario:
+      "Picture this: every Monday morning your dashboard shows exactly how many leads came in, how fast they were contacted, and where deals are stalling — no spreadsheets, no chasing your team.",
     summary:
       "Executive-grade reporting that shows what your AI systems are producing, where revenue leakage lives, and what should change next.",
     launchWindow: "Built into every engagement",
@@ -143,27 +205,51 @@ export const featuredMetrics = [
 export const resultStories: ResultStory[] = [
   {
     category: "Voice Agent",
-    vertical: "Estate Agency",
-    headline: "Faster replies can turn more enquiries into viewings.",
+    vertical: "Real Estate",
+    headline: "Faster replies turn more enquiries into booked viewings.",
     summary:
-      "Useful when every missed call or delayed reply means lost pipeline.",
+      "Every missed call or delayed reply is pipeline handed to a competitor. An always-on voice agent captures, qualifies, and books before your team logs in.",
     metrics: ["24/7 lead capture", "Faster viewing bookings", "Less manual chasing"],
   },
   {
     category: "Automation",
-    vertical: "Clinic",
-    headline: "Reminder and rebooking flows reduce front-desk pressure.",
+    vertical: "Clinic & Wellness",
+    headline: "Reminder and rebooking flows reduce no-shows and free the front desk.",
     summary:
-      "Useful when teams are overloaded by reminders, FAQs, and repeat admin.",
+      "Front-desk teams lose hours each day to reminders, rebooking calls, and routine FAQs. Automating these flows means fewer no-shows and more time for complex patient interactions.",
     metrics: ["Fewer no-shows", "Less staff time on routine calls", "Cleaner scheduling"],
   },
   {
     category: "Service Experience",
-    vertical: "Concierge",
-    headline: "Instant replies help premium brands feel more responsive.",
+    vertical: "Luxury Concierge",
+    headline: "Instant, on-brand replies keep premium clients engaged at any hour.",
     summary:
-      "Useful when speed, tone, and clean handoff matter as much as availability.",
-    metrics: ["After-hours coverage", "On-brand communication", "Better request routing"],
+      "Premium clients expect a polished response within minutes, not a business-hours voicemail. An AI-handled first response keeps the brand tone and routes to the right person.",
+    metrics: ["After-hours coverage", "On-brand first response", "Better request routing"],
+  },
+  {
+    category: "Intelligent Automation",
+    vertical: "Professional Services",
+    headline: "Automated follow-up ensures no warm lead goes cold.",
+    summary:
+      "Leads that do not hear back within an hour are 7× less likely to convert. Automated sequences keep engagement high while your team focuses on closing.",
+    metrics: ["Consistent follow-up cadence", "CRM always up to date", "Less admin per sale"],
+  },
+  {
+    category: "BI Reporting",
+    vertical: "Multi-Location Business",
+    headline: "One dashboard shows where revenue is leaking across every channel.",
+    summary:
+      "When leads come in across WhatsApp, phone, web forms, and Instagram, visibility disappears. A unified reporting layer shows response times, conversion by channel, and where to focus next.",
+    metrics: ["Single source of truth", "Channel performance at a glance", "Monthly optimization view"],
+  },
+  {
+    category: "Voice Agent",
+    vertical: "Education & Training",
+    headline: "Enrolment queries answered instantly, 24 hours a day.",
+    summary:
+      "Prospective students ask the same questions repeatedly. An AI agent handles course FAQs, collects contact details, and books discovery calls so no enrolment opportunity is lost overnight.",
+    metrics: ["Instant FAQ handling", "Lead collection outside office hours", "Seamless booking handoff"],
   },
 ];
 
@@ -188,6 +274,11 @@ export const processSteps: ProcessStep[] = [
     title: "Go Live & Optimize",
     text: "We launch, monitor performance, and improve based on real enquiries.",
   },
+  {
+    step: "05",
+    title: "Ongoing Support",
+    text: "We do not disappear after launch. We stay close, refine the system, and build on what is working.",
+  },
 ];
 
 export const principles = [
@@ -195,6 +286,35 @@ export const principles = [
   "Keep the experience simple for your customers",
   "Send important conversations to humans when needed",
   "Track results from day one",
+];
+
+export type WaitingCost = {
+  stat: string;
+  label: string;
+  detail: string;
+};
+
+export const waitingCosts: WaitingCost[] = [
+  {
+    stat: "4–8 hrs",
+    label: "Average response time",
+    detail: "How long Dubai service businesses take to respond to an online enquiry on average.",
+  },
+  {
+    stat: "78%",
+    label: "Go to the first responder",
+    detail: "Of buyers choose the business that responds first — not the cheapest or most experienced.",
+  },
+  {
+    stat: "60%",
+    label: "Never hear back",
+    detail: "Of leads are never followed up at all — they move on before a human gets to them.",
+  },
+  {
+    stat: "AED 10K+",
+    label: "Monthly pipeline at risk",
+    detail: "Estimated value lost per month for a typical service business from slow lead response alone.",
+  },
 ];
 
 export const faqs: FAQItem[] = [
@@ -227,5 +347,30 @@ export const faqs: FAQItem[] = [
     question: "What happens after launch?",
     answer:
       "We monitor performance, refine the flow, and review the numbers with you so the system keeps improving after it goes live.",
+  },
+  {
+    question: "We tried automation before and it did not work. Why would this be different?",
+    answer:
+      "Most automation failures happen when the tool is chosen before the process is understood. We start by mapping the actual workflow first, then build to fit it. That is why we start with one focused flow rather than a platform-wide rollout.",
+  },
+  {
+    question: "We are not a tech company. Will we be able to manage this?",
+    answer:
+      "That is exactly who we build for. The output is a working system your team uses through the tools they already know — WhatsApp, email, your CRM. You do not need to touch any code or configuration after launch.",
+  },
+  {
+    question: "What if we want to change or stop?",
+    answer:
+      "You own everything. The workflows, the data, the connections. If you want to pause, change direction, or hand it to an internal team, we make that transition straightforward.",
+  },
+  {
+    question: "Do we need to replace our current tools?",
+    answer:
+      "Almost never. We prefer to layer automation onto what you already use. Replacing a working CRM or calendar adds risk and delay — we avoid that unless there is a clear case for it.",
+  },
+  {
+    question: "How do you charge?",
+    answer:
+      "Engagements are scoped and priced per project. Founding clients get locked-in pricing that does not increase as their systems grow. We discuss specifics on the strategy call once we understand the scope.",
   },
 ];

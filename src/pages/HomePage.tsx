@@ -1,7 +1,12 @@
 import { NavLink } from "react-router-dom";
+import { CtaBanner, defaultPrimaryCta } from "../components/CtaBanner";
 import { IntegrationsStrip } from "../components/IntegrationsStrip";
+import { ProcessStepsGrid } from "../components/ProcessStepsGrid";
+import { RoiEstimator } from "../components/RoiEstimator";
+import { SectionBlock } from "../components/SectionBlock";
 import { SectionIntro } from "../components/SectionIntro";
-import { featuredMetrics, fitSignals, processSteps, serviceCards } from "../siteData";
+import { ServiceCard } from "../components/ServiceCard";
+import { featuredMetrics, fitSignals, processSteps, serviceCards, waitingCosts } from "../siteData";
 
 export function HomePage() {
   return (
@@ -15,8 +20,8 @@ export function HomePage() {
             leads, bookings, and follow-up.
           </p>
           <div className="hero-actions">
-            <NavLink className="button button-primary" to="/contact">
-              Book a strategy call
+            <NavLink className="button button-primary" to={defaultPrimaryCta.to}>
+              {defaultPrimaryCta.label}
             </NavLink>
             <NavLink className="button button-secondary" to="/services">
               See services
@@ -40,36 +45,50 @@ export function HomePage() {
 
       <IntegrationsStrip compact />
 
-      <section className="home-services-section">
-        <div className="home-services-intro">
+      <SectionBlock
+        className="home-services-section"
+        intro={
           <SectionIntro
             eyebrow="Services"
             title="What Dravyx AI helps you do."
             description="Three clear services designed to help you respond faster, reduce admin, and convert more enquiries."
           />
-        </div>
+        }
+      >
         <div className="services-grid">
           {serviceCards.map((service) => (
-            <article className="card feature-card" key={service.title}>
-              <p className="mini-label">{service.index}</p>
-              <h3>{service.title}</h3>
-              <p className="card-tagline">{service.tagline}</p>
-              <p>{service.summary}</p>
-              <ul>
-                {service.points.map((point) => (
-                  <li key={point}>{point}</li>
-                ))}
-              </ul>
-              <p className="launch-window">{service.launchWindow}</p>
-            </article>
+            <ServiceCard key={service.title} service={service} />
           ))}
         </div>
-      </section>
+      </SectionBlock>
 
-      <section className="home-fit-section">
-        <div className="home-fit-intro">
-          <SectionIntro eyebrow="Best For" title="A strong fit if any of this sounds familiar." />
+      <SectionBlock
+        className="waiting-costs-section"
+        intro={
+          <SectionIntro
+            eyebrow="The Cost of Waiting"
+            title="Every week without automation is a week of lost leads."
+            description="These are the numbers behind why Dubai service businesses are moving fast."
+          />
+        }
+      >
+        <div className="waiting-costs-grid">
+          {waitingCosts.map((item) => (
+            <div className="waiting-cost-card" key={item.label}>
+              <strong className="waiting-cost-stat">{item.stat}</strong>
+              <p className="waiting-cost-label">{item.label}</p>
+              <p className="waiting-cost-detail">{item.detail}</p>
+            </div>
+          ))}
         </div>
+      </SectionBlock>
+
+      <SectionBlock
+        className="home-fit-section"
+        intro={
+          <SectionIntro eyebrow="Best For" title="A strong fit if any of this sounds familiar." />
+        }
+      >
         <div className="fit-list">
           {fitSignals.map((signal) => (
             <article className="fit-item" key={signal}>
@@ -78,41 +97,29 @@ export function HomePage() {
             </article>
           ))}
         </div>
-      </section>
+      </SectionBlock>
 
-      <section className="home-process-section">
-        <div className="home-process-intro">
+      <RoiEstimator />
+
+      <SectionBlock
+        className="home-process-section"
+        intro={
           <SectionIntro
             eyebrow="How It Works"
             title="A short path from first call to go-live."
             description="We keep the buying process simple and focused."
           />
-        </div>
-        <div className="process-preview">
-          {processSteps.map((step) => (
-            <article className="band-card" key={step.step}>
-              <p className="mini-label">{step.step}</p>
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+        }
+      >
+        <ProcessStepsGrid steps={processSteps} layout="preview" />
+      </SectionBlock>
 
-      <section className="cta-banner">
-        <div>
-          <p className="eyebrow">Ready To Launch</p>
-          <h2>Start with one workflow that improves response, follow-up, or booking.</h2>
-        </div>
-        <div className="cta-actions">
-          <NavLink className="button button-primary" to="/contact">
-            Book a strategy call
-          </NavLink>
-          <NavLink className="button button-secondary" to="/how-it-works">
-            See how it works
-          </NavLink>
-        </div>
-      </section>
+      <CtaBanner
+        eyebrow="Ready To Launch"
+        title="Start with one workflow that improves response, follow-up, or booking."
+        primary={defaultPrimaryCta}
+        secondary={{ label: "See how it works", to: "/how-it-works" }}
+      />
     </>
   );
 }

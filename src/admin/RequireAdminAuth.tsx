@@ -47,7 +47,7 @@ export function RequireAdminAuth({ children }: { children: ReactNode }) {
   }
 
   const allowed = import.meta.env.VITE_ADMIN_EMAIL?.trim();
-  if (allowed && session.user.email?.toLowerCase() !== allowed.toLowerCase()) {
+  if (!allowed || session.user.email?.toLowerCase() !== allowed.toLowerCase()) {
     void getSupabase().auth.signOut();
     return <Navigate to="/admin/login" replace />;
   }

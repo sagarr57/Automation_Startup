@@ -10,6 +10,7 @@ import { ContactPage } from "./pages/ContactPage";
 import { FAQPage } from "./pages/FAQPage";
 import { HomePage } from "./pages/HomePage";
 import { HowItWorksPage } from "./pages/HowItWorksPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
 import { ResultsPage } from "./pages/ResultsPage";
 import { ServicesPage } from "./pages/ServicesPage";
@@ -41,6 +42,7 @@ export default function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms-and-conditions" element={<TermsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </>

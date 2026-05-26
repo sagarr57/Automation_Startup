@@ -1,5 +1,9 @@
 import { FormEvent, useState } from "react";
+import { ContactReachLinks } from "../components/ContactReachLinks";
+import { FoundingBadge } from "../components/FoundingBadge";
+import { PageTitleBlock } from "../components/PageTitleBlock";
 import { getSupabase, isSupabaseConfigured } from "../lib/supabaseClient";
+import { CalendlyEmbed } from "../components/CalendlyEmbed";
 
 export function ContactPage() {
   const [name, setName] = useState("");
@@ -16,9 +20,7 @@ export function ContactPage() {
 
     if (!isSupabaseConfigured()) {
       setStatus("error");
-      setErrorText(
-        "This form is not connected yet. Please email us directly or try again later.",
-      );
+      setErrorText("This form is not connected yet. Please reach out directly via email or WhatsApp.");
       return;
     }
 
@@ -46,35 +48,46 @@ export function ContactPage() {
 
   return (
     <>
+      <section className="contact-booking">
+        <PageTitleBlock
+          eyebrow="Book a Strategy Call"
+          title="Pick a time that works for you."
+          description="Choose a slot and we will review your biggest workflow gap, map the right first automation, and agree on next steps — all in 30 minutes."
+        >
+          <FoundingBadge standalone />
+        </PageTitleBlock>
+        <CalendlyEmbed />
+      </section>
+
+      <div className="contact-divider">
+        <span>Or send a written enquiry</span>
+      </div>
+
       <section className="contact-shell">
         <div className="contact-sidebar">
-          <div className="contact-intro">
-            <p className="eyebrow">Contact</p>
-            <h1>Book a strategy call and choose the right first workflow.</h1>
-            <p className="page-copy">
-              We will look at where you are losing time or leads, then map the best starting point.
-            </p>
-          </div>
-          <div className="contact-card">
-            <h2>What happens on the call</h2>
-            <ul>
-              <li>Review the workflow that is costing you time or revenue</li>
-              <li>Choose the best first channel: phone, WhatsApp, web chat, or forms</li>
-              <li>Agree on scope, timeline, and success measures</li>
-            </ul>
+          <PageTitleBlock
+            eyebrow="Written Enquiry"
+            title="Prefer to write first?"
+            description="Send us a message and we will get back to you within a few hours."
+            headingLevel="h2"
+          />
+
+          <div className="contact-card contact-reach-card">
+            <h2>Reach us directly</h2>
+            <ContactReachLinks />
           </div>
         </div>
+
         <div className="contact-card contact-form-card">
           <h2>Project enquiry</h2>
-          {!isSupabaseConfigured() ? (
-            <p className="contact-form-note">
-              Online submissions are temporarily unavailable. Please use the email on this page or
-              reach out via LinkedIn.
-            </p>
-          ) : null}
+          <p className="contact-form-note-founding">
+            We are currently onboarding our first clients at a founding rate.
+            Early partners get priority support, direct founder access, and locked-in pricing.
+          </p>
+
           {status === "success" ? (
             <p className="contact-form-success" role="status">
-              Thanks, we received your enquiry. We will get back to you shortly.
+              Thanks, we received your enquiry. We will get back to you shortly — usually within a few hours.
             </p>
           ) : null}
           {status === "error" && errorText ? (
@@ -82,6 +95,7 @@ export function ContactPage() {
               {errorText}
             </p>
           ) : null}
+
           <form className="contact-form" onSubmit={handleContactSubmit}>
             <label>
               <span>Name</span>

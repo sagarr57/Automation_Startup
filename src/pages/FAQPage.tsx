@@ -1,3 +1,4 @@
+import { CtaBanner, defaultPrimaryCta } from "../components/CtaBanner";
 import { PageHero } from "../components/PageHero";
 import { faqs } from "../siteData";
 
@@ -17,6 +18,11 @@ export function FAQPage() {
           </article>
         ))}
       </section>
+      <CtaBanner
+        eyebrow="Still Have Questions"
+        title="Book a short call and we will walk through fit, scope, and the right first workflow."
+        primary={defaultPrimaryCta}
+      />
     </>
   );
 }

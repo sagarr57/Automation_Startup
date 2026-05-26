@@ -17,26 +17,16 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <div
-          style={{
-            minHeight: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "1rem",
-            padding: "2rem",
-            textAlign: "center",
-          }}
-        >
+        <div className="error-boundary-shell">
           <p className="eyebrow">Something went wrong</p>
-          <h1 style={{ fontSize: "1.5rem" }}>The page failed to load.</h1>
-          <p className="page-copy" style={{ maxWidth: "480px" }}>
+          <h1>The page failed to load.</h1>
+          <p className="page-copy">
             Try refreshing the page. If the problem continues, please reach out via the contact
             form.
           </p>
           <button
             className="button button-primary"
+            type="button"
             onClick={() => window.location.reload()}
           >
             Reload page

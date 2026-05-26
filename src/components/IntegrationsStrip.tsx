@@ -1,7 +1,12 @@
 import { integrationTools } from "../siteData";
 import { ToolBadge } from "./ToolBadge";
 
-export function IntegrationsStrip({ compact = false }: { compact?: boolean }) {
+type IntegrationsStripProps = {
+  /** Pulls the strip up under the home hero (homepage only). */
+  compact?: boolean;
+};
+
+export function IntegrationsStrip({ compact = false }: IntegrationsStripProps) {
   const marqueeItems = [...integrationTools, ...integrationTools];
 
   return (

@@ -23,7 +23,7 @@
 
 .admin-title {
   font-size: clamp(1.45rem, 2.4vw, 1.85rem);
-  font-weight: 560;
+  font-weight: 600;
   letter-spacing: -0.04em;
   line-height: 1.1;
   margin: 4px 0 0;

@@ -1,3 +1,4 @@
+import { CtaBanner, defaultPrimaryCta } from "../components/CtaBanner";
 import { PageHero } from "../components/PageHero";
 
 export function PrivacyPolicyPage() {
@@ -36,6 +37,11 @@ export function PrivacyPolicyPage() {
           </p>
         </article>
       </section>
+      <CtaBanner
+        eyebrow="Questions About Privacy"
+        title="Reach out if you need more detail on how we handle your information."
+        primary={defaultPrimaryCta}
+      />
     </>
   );
 }
