@@ -674,6 +674,18 @@
   border: none;
 }
 
+.calendly-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 200px;
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--muted);
+}
+
 .contact-divider {
   display: flex;
   align-items: center;

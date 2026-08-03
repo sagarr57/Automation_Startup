@@ -1,5 +1,23 @@
 export const config = { runtime: "edge" };
 
+// Simple in-memory rate limiter — 10 requests per minute per IP.
+// Persists across warm invocations of the same edge worker instance.
+const ipCounts = new Map<string, { count: number; reset: number }>();
+const RATE_LIMIT = 10;
+const RATE_WINDOW_MS = 60_000;
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = ipCounts.get(ip);
+  if (!entry || now > entry.reset) {
+    ipCounts.set(ip, { count: 1, reset: now + RATE_WINDOW_MS });
+    return false;
+  }
+  if (entry.count >= RATE_LIMIT) return true;
+  entry.count++;
+  return false;
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // DRAVYX AI — BUSINESS-TRAINED SYSTEM PROMPT
 // The model must answer as Dravyx, not as a general AI.
@@ -187,24 +205,32 @@ export default async function handler(req: Request): Promise<Response> {
     return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405 });
   }
 
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
+  if (isRateLimited(ip)) {
+    return new Response(JSON.stringify({ error: "rate_limited" }), { status: 429 });
+  }
+
   const apiKey = process.env.DRAVYX_CLAUDE_KEY;
   if (!apiKey) {
     return new Response(JSON.stringify({ error: "not_configured" }), { status: 503 });
   }
 
-  let body: { messages?: ApiMessage[] };
+  let body: { messages?: unknown[] };
   try {
     body = await req.json();
   } catch {
     return new Response(JSON.stringify({ error: "Bad request" }), { status: 400 });
   }
 
-  const raw = body.messages ?? [];
-  const messages: ApiMessage[] = raw
+  if (!Array.isArray(body.messages)) {
+    return new Response(JSON.stringify({ error: "Bad request" }), { status: 400 });
+  }
+
+  const messages: ApiMessage[] = body.messages
     .slice(-12)
-    .map((m) => ({
-      role: m.role === "assistant" ? "assistant" : ("user" as const),
-      content: String(m.content ?? "").slice(0, 600),
+    .map((m): ApiMessage => ({
+      role: (m as ApiMessage).role === "assistant" ? "assistant" : "user",
+      content: String((m as ApiMessage).content ?? "").slice(0, 600),
     }))
     .filter((m) => m.content.trim().length > 0);
 
@@ -212,20 +238,25 @@ export default async function handler(req: Request): Promise<Response> {
     return new Response(JSON.stringify({ error: "Invalid messages" }), { status: 400 });
   }
 
-  const upstream = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 400,
-      system: SYSTEM_PROMPT,
-      messages,
-    }),
-  });
+  let upstream: Response;
+  try {
+    upstream = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 400,
+        system: SYSTEM_PROMPT,
+        messages,
+      }),
+    });
+  } catch {
+    return new Response(JSON.stringify({ error: "upstream_error" }), { status: 502 });
+  }
 
   if (!upstream.ok) {
     return new Response(JSON.stringify({ error: "upstream_error" }), { status: 502 });

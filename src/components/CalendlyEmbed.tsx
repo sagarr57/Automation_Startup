@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { calendlyUrl } from "../siteData";
 
 const CALENDLY_SCRIPT = "https://assets.calendly.com/assets/external/widget.js";
@@ -47,6 +47,7 @@ function loadCalendlyScript(): Promise<void> {
 
 export function CalendlyEmbed() {
   const hostRef = useRef<HTMLDivElement>(null);
+  const [loadFailed, setLoadFailed] = useState(false);
 
   useEffect(() => {
     const host = hostRef.current;
@@ -65,13 +66,24 @@ export function CalendlyEmbed() {
         });
       })
       .catch(() => {
-        /* Fallback: open scheduling page if widget script is blocked */
+        if (!cancelled) setLoadFailed(true);
       });
 
     return () => {
       cancelled = true;
     };
   }, []);
+
+  if (loadFailed) {
+    return (
+      <div className="calendly-wrap calendly-fallback">
+        <p>The booking widget could not load. Please open the scheduling page directly.</p>
+        <a className="button button-primary" href={calendlyUrl} target="_blank" rel="noopener noreferrer">
+          Open booking page
+        </a>
+      </div>
+    );
+  }
 
   return (
     <div className="calendly-wrap">

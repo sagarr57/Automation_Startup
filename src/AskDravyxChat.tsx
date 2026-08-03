@@ -36,7 +36,7 @@ const defaultContactLinkHref = "/contact";
 const integrationAliases: Record<string, string[]> = {
   HubSpot: ["hubspot"],
   Zoho: ["zoho"],
-  WhatsApp: ["whatsapp", "wa"],
+  WhatsApp: ["whatsapp"],
   Twilio: ["twilio"],
   Calendly: ["calendly"],
   "Google Sheets": ["google sheets", "sheets"],
@@ -454,9 +454,7 @@ function getDravyxAnswer(question: string, context: ConversationContext): ChatRe
   }
 
   return makeReply(
-    "Yes, custom integrations are possible as well. If you share the tools you use and what you want the workflow to do, we can review it and recommend the best setup for your business.",
-    defaultContactLinkLabel,
-    defaultContactLinkHref,
+    "That is outside my scope — I am here to help with workflow automation and whether Dravyx AI is the right fit for your business. What does your current process look like for handling leads or follow-up?",
   );
 }
 
@@ -598,7 +596,7 @@ export default function AskDravyxChat() {
             </button>
           </div>
 
-          <div className="ask-dravyx-messages">
+          <div className="ask-dravyx-messages" aria-live="polite" aria-atomic="false">
             {messages.map((message) => (
               <article
                 key={message.id}

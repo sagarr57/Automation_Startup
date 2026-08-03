@@ -6,8 +6,7 @@ import { ScrollToTop } from "../components/ScrollToTop";
 import { ContactReachLinks } from "../components/ContactReachLinks";
 import { SocialIconLink } from "../components/SocialIconLink";
 import { WhatsAppButton } from "../components/WhatsAppButton";
-import { contactChannels } from "../siteData";
-import { navigation } from "../siteData";
+import { contactChannels, navigation } from "../siteData";
 
 export function MarketingLayout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -24,13 +23,14 @@ export function MarketingLayout() {
           className="mobile-menu-toggle"
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileMenuOpen}
+          aria-controls="site-nav"
           onClick={() => setMobileMenuOpen((v) => !v)}
         >
           <span />
           <span />
           <span />
         </button>
-        <nav className={mobileMenuOpen ? "site-nav site-nav-open" : "site-nav"}>
+        <nav id="site-nav" className={mobileMenuOpen ? "site-nav site-nav-open" : "site-nav"}>
           {navigation.map((item) => (
             <NavLink
               key={item.to}

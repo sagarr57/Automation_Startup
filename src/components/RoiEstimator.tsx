@@ -43,6 +43,7 @@ export function RoiEstimator() {
               value={leadsPerWeek}
               onChange={(e) => setLeadsPerWeek(+e.target.value)}
               className="roi-slider"
+              aria-label="Inbound leads per week"
             />
             <p className="roi-slider-hint">≈ {monthlyLeads} leads per month</p>
           </div>
@@ -60,6 +61,7 @@ export function RoiEstimator() {
               value={dealValue}
               onChange={(e) => setDealValue(+e.target.value)}
               className="roi-slider"
+              aria-label="Average deal value in AED"
             />
           </div>
 
@@ -76,6 +78,7 @@ export function RoiEstimator() {
               value={lostPct}
               onChange={(e) => setLostPct(+e.target.value)}
               className="roi-slider"
+              aria-label="Percentage of leads missed due to slow response"
             />
             <p className="roi-slider-hint">≈ {leadsRecoverable} leads/month Dravyx could capture</p>
           </div>
@@ -93,6 +96,7 @@ export function RoiEstimator() {
               value={adminHoursPerWeek}
               onChange={(e) => setAdminHoursPerWeek(+e.target.value)}
               className="roi-slider"
+              aria-label="Hours per week spent on manual follow-up"
             />
             <p className="roi-slider-hint">≈ {hoursPerMonth}h / month we could automate away</p>
           </div>
