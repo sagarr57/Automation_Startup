@@ -119,6 +119,8 @@ export const fitSignals = [
   "Your team loses time on follow-up, reminders, and manual updates.",
   "You want more bookings without growing headcount at the same speed.",
   "You want one clear view of enquiries, response time, and conversions.",
+  "You need a website or web app that actually converts — not just looks good.",
+  "You want a custom CRM, client portal, or internal tool built to your exact process.",
 ];
 
 export const serviceCards: ServiceCard[] = [
@@ -167,6 +169,21 @@ export const serviceCards: ServiceCard[] = [
       "Monthly optimization view",
     ],
   },
+  {
+    index: "04",
+    title: "Web Development",
+    tagline: "Build the app. Ship it automated.",
+    scenario:
+      "Picture this: your new site goes live and on day one, every lead is captured, your CRM is updated, and WhatsApp follow-up fires automatically — because we built the automation into the site, not bolted it on later.",
+    summary:
+      "Static sites, dynamic web apps, 3D immersive experiences, custom CRMs, and client portals — built fast, connected to automation from the first commit.",
+    launchWindow: "Delivered in 2-6 weeks",
+    points: [
+      "Static, dynamic & 3D sites",
+      "Custom CRMs & portals",
+      "Automated from day one",
+    ],
+  },
 ];
 
 export const industries: Industry[] = [
@@ -193,6 +210,22 @@ export const industries: Industry[] = [
     solution:
       "Dravyx handles first response and routing without losing brand tone.",
     edge: "Best for high-touch businesses that cannot afford delays.",
+  },
+  {
+    name: "Startups & Scale-Ups",
+    problem:
+      "Off-the-shelf tools do not fit the exact workflow — leads slip through gaps.",
+    solution:
+      "Dravyx builds the custom web app, CRM, or client portal that matches the exact process.",
+    edge: "Best when you have outgrown templates and need something built to spec.",
+  },
+  {
+    name: "Professional Services",
+    problem:
+      "A generic website does not reflect the firm's quality — and does not convert.",
+    solution:
+      "Dravyx builds fast, professional sites with conversion-focused structure and automation baked in.",
+    edge: "Strong fit for firms that want a digital presence that actually generates enquiries.",
   },
 ];
 
@@ -250,6 +283,14 @@ export const resultStories: ResultStory[] = [
     summary:
       "Prospective students ask the same questions repeatedly. An AI agent handles course FAQs, collects contact details, and books discovery calls so no enrolment opportunity is lost overnight.",
     metrics: ["Instant FAQ handling", "Lead collection outside office hours", "Seamless booking handoff"],
+  },
+  {
+    category: "Web Development",
+    vertical: "Startup & Scale-Up",
+    headline: "A custom web app replaces three spreadsheets and a shared inbox.",
+    summary:
+      "When the business has grown past what a template or generic tool can handle, a purpose-built web app or internal portal gives the team a single place to manage clients, leads, and operations.",
+    metrics: ["Built to exact workflow", "Replaces manual coordination", "Integrates with existing tools"],
   },
 ];
 
@@ -372,5 +413,20 @@ export const faqs: FAQItem[] = [
     question: "How do you charge?",
     answer:
       "Engagements are scoped and priced per project. Founding clients get locked-in pricing that does not increase as their systems grow. We discuss specifics on the strategy call once we understand the scope.",
+  },
+  {
+    question: "Do you build websites and web applications?",
+    answer:
+      "Yes — web development is one of our four services. We build static sites, dynamic React and Next.js apps, 3D immersive experiences, e-commerce stores, custom CRMs, and client portals. Unlike a regular web agency, we ship automation into the build from day one — leads captured, CRM updated, follow-up triggered the moment your site goes live.",
+  },
+  {
+    question: "What types of websites do you build?",
+    answer:
+      "Static marketing sites, dynamic web apps, 3D immersive product experiences, e-commerce stores, custom CRMs, client portals, booking systems, and admin dashboards. Every build is scoped around a business goal — not a template.",
+  },
+  {
+    question: "Can you build the site and automate it in one go?",
+    answer:
+      "That is the end-to-end path. We build the site or app and connect the automation layer in a single engagement — so on launch day, leads flow into your CRM, follow-up fires automatically, and reporting is already running.",
   },
 ];

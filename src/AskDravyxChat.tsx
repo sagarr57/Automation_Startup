@@ -420,6 +420,14 @@ function getDravyxAnswer(question: string, context: ConversationContext): ChatRe
     );
   }
 
+  if (/(build.*website|build.*web|do you build|make.*website|create.*website|website development|web development|web app|web application|landing page|static site|dynamic site|3d.*site|3d.*web|immersive.*site|custom crm|client portal|admin panel|admin dashboard|internal tool|ecommerce.*site|e-commerce.*site|shopify.*build|webflow.*build|react.*app|next\.?js)/.test(text)) {
+    return makeReply(
+      "Yes — web development is one of our four services. Static sites, dynamic React and Next.js apps, 3D immersive experiences, custom CRMs, client portals, e-commerce, admin dashboards — we build all of it. The difference from a web agency: we ship automation into the build from day one. When your site goes live, leads flow into your CRM, follow-up fires automatically, and reporting is already running. What kind of site or app do you have in mind?",
+      defaultContactLinkLabel,
+      defaultContactLinkHref,
+    );
+  }
+
   if (/(contact|book|call|demo|talk|meeting)/.test(text)) {
     return makeReply(
       "You can book a strategy call through the contact page. That is the fastest way to choose the right first workflow and understand what Dravyx AI should automate first for your business.",

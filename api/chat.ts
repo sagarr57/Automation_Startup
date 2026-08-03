@@ -79,6 +79,28 @@ Real example:
 Timeline: Built into every engagement from day one.
 Outcomes: Conversion visibility, channel quality insight, monthly optimization view.
 
+4. WEB DEVELOPMENT
+What: We build the digital surface — then automate everything behind it. Static sites, dynamic React and Next.js web apps, 3D immersive experiences, e-commerce stores, custom CRMs, client portals, booking systems, and admin dashboards.
+Who needs it: Any business that needs a new site, app, or internal tool — and wants it to work from day one, not just look good. We connect the automation layer into the build so leads, follow-up, and CRM updates are live at launch.
+What we build:
+  - Static marketing and landing page sites (fast, SEO-ready, conversion-focused)
+  - Dynamic web apps (React, Next.js — dashboards, portals, booking flows)
+  - 3D and immersive web experiences (Three.js, Spline — for product showcases, luxury brands, high-impact launches)
+  - Custom CRMs and internal tools (built exactly to the team's workflow — no off-the-shelf compromise)
+  - Client portals and booking systems
+  - E-commerce stores (Shopify, custom builds)
+  - Admin dashboards and reporting views
+Real examples:
+  - A real estate agency needs a new site — we build it, connect it to their CRM, and set up automatic WhatsApp follow-up on every form lead. One engagement, fully live on launch day.
+  - A luxury brand wants a 3D product showcase with an enquiry flow — we build the experience and wire the form into their CRM with instant team notification.
+  - A growing services business has outgrown spreadsheets — we build a custom CRM that matches their exact process, with automation running inside it from day one.
+Timeline: 2–6 weeks depending on scope.
+Outcomes: A digital product that works, not just one that looks good — with automation, reporting, and lead capture built in from the start.
+Key difference from a web agency: We do not just hand over a site. We connect it to the automation layer so the whole system — site, CRM, follow-up, reporting — is operational on launch day.
+
+IF SOMEONE ASKS "do you build websites?" or "can you build a web app?":
+Answer: "Yes — web development is one of our four services. We build static sites, dynamic React and Next.js apps, 3D immersive experiences, custom CRMs, and client portals. The difference: we ship automation into the build from day one — so when your site goes live, leads flow into your CRM, follow-up fires automatically, and reporting is already running. What kind of site or app do you have in mind?"
+
 ═══ HOW WE WORK (PROCESS) ═══
 
 01. Strategy Call — 30 minutes. We find the single workflow that saves the most time or recovers the most revenue fastest.

@@ -13,11 +13,11 @@ export function HomePage() {
     <>
       <section className="hero">
         <div className="hero-copy">
-          <p className="eyebrow">AI Automation for Dubai Businesses</p>
-          <h1>Turn missed enquiries and manual follow-up into booked business.</h1>
+          <p className="eyebrow">Build. Automate. Scale. — Dubai & Beyond</p>
+          <h1>From the first line of code to fully automated results.</h1>
           <p className="page-copy">
-            Dravyx AI helps service businesses reply faster, reduce manual work, and stay on top of
-            leads, bookings, and follow-up.
+            Dravyx AI builds your digital product — site, app, or CRM — and automates everything
+            behind it. One partner, end to end.
           </p>
           <div className="hero-actions">
             <NavLink className="button button-primary" to={defaultPrimaryCta.to}>
