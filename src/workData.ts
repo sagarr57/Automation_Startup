@@ -188,25 +188,3 @@ export const workProjects: WorkProject[] = [
     },
   },
 ];
-
-export const serveSectors = [
-  "Real Estate",
-  "Clinics & Wellness",
-  "Automotive",
-  "Community Organisations",
-  "Digital Publishing",
-  "Luxury Concierge",
-  "Professional Services",
-  "Startups & Scale-Ups",
-];
-
-export const manifestoBlocks = [
-  {
-    label: "01 // The Reality",
-    text: "Most businesses don't lose leads because their offer is weak. They lose them in the gaps between the website, the inbox, and the follow-up.",
-  },
-  {
-    label: "02 // The Fix",
-    text: "We don't bolt automation onto a finished site. We build the product and the system behind it at the same time, so it works on launch day.",
-  },
-];

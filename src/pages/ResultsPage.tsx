@@ -1,5 +1,6 @@
 import { CtaBanner, defaultPrimaryCta } from "../components/CtaBanner";
 import { PageHero } from "../components/PageHero";
+import { RoiEstimator } from "../components/RoiEstimator";
 import { resultStories } from "../siteData";
 
 export function ResultsPage() {
@@ -26,6 +27,7 @@ export function ResultsPage() {
           </article>
         ))}
       </section>
+      <RoiEstimator />
       <CtaBanner
         eyebrow="Ready to See This in Your Business"
         title="Start with the workflow that affects enquiries, bookings, or follow-up first."

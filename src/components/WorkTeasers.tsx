@@ -13,7 +13,7 @@ export function WorkTeasers() {
           style={{ ["--accent-project" as string]: project.accent }}
         >
           <div className="work-teaser-media">
-            <DeviceMockup project={project} parallax={0.06} />
+            <DeviceMockup project={project} />
           </div>
           <div className="work-teaser-copy">
             <p className="work-meta">
@@ -25,7 +25,7 @@ export function WorkTeasers() {
             <h3>{project.name}</h3>
             <p className="work-teaser-headline">{project.headline}</p>
             <div className="work-chips">
-              {project.stack.slice(0, 4).map((tech) => (
+              {project.stack.slice(0, 3).map((tech) => (
                 <span key={tech} className="chip">
                   {tech}
                 </span>

@@ -2,14 +2,11 @@ import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 
 /**
- * Site-wide scroll effects (no dependencies):
- *  - top scroll-progress bar
- *  - reveal-on-scroll for common blocks (auto-tagged) and anything with [data-reveal]
+ * Lightweight site-wide scroll effects (no dependencies):
+ *  - top scroll-progress bar + header state
+ *  - fade-up reveal for common blocks
  *  - count-up numbers for [data-count]
- *  - parallax for [data-parallax="<speed>"]
- *  - scroll-linked horizontal drift for [data-scroll-x="<speed>"]
- *  - word-by-word highlight for .scrub-text
- *  - shrink/dim for sticky .stack-card elements as the next card covers them
+ *  - stacking cards (.stack-list): cards underneath shrink/dim as new ones slide over
  *  - pointer spotlight (--mx / --my) on .spotlight elements
  */
 
@@ -17,8 +14,7 @@ const AUTO_REVEAL = [
   ".section-intro-wrap",
   ".page-hero",
   ".card",
-  ".waiting-cost-card",
-  ".fit-item",
+  ".band-card",
   ".process-card",
   ".faq-card",
   ".cta-banner",
@@ -28,30 +24,23 @@ const AUTO_REVEAL = [
   ".case-media",
   ".case-stats",
   ".case-grid",
-  ".sector-marquee",
   ".roi-estimator",
-  ".manifesto-block",
 ].join(",");
 
 const prefersReducedMotion = () =>
-  typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function formatCount(value: number, el: HTMLElement) {
-  const prefix = el.dataset.prefix ?? "";
-  const suffix = el.dataset.suffix ?? "";
-  return `${prefix}${Math.round(value).toLocaleString("en-US")}${suffix}`;
+  return `${el.dataset.prefix ?? ""}${Math.round(value).toLocaleString("en-US")}${el.dataset.suffix ?? ""}`;
 }
 
 function animateCount(el: HTMLElement) {
   const target = Number(el.dataset.count);
   if (!Number.isFinite(target)) return;
-  const duration = 1400;
   const start = performance.now();
   const tick = (now: number) => {
-    const t = Math.min(1, (now - start) / duration);
-    const eased = 1 - Math.pow(1 - t, 4);
-    el.textContent = formatCount(target * eased, el);
+    const t = Math.min(1, (now - start) / 1200);
+    el.textContent = formatCount(target * (1 - Math.pow(1 - t, 4)), el);
     if (t < 1) requestAnimationFrame(tick);
   };
   requestAnimationFrame(tick);
@@ -66,8 +55,8 @@ export function ScrollEffects() {
     const root = document.documentElement;
     root.classList.add("fx-ready");
 
-    // ---- Reveal + counters --------------------------------------------------
-    const revealObserver = new IntersectionObserver(
+    // ---- Reveal + counters (IntersectionObserver, no per-frame work) -------
+    const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (!entry.isIntersecting) continue;
@@ -75,108 +64,92 @@ export function ScrollEffects() {
           el.classList.add("is-visible");
           if (el.dataset.count && !el.dataset.counted) {
             el.dataset.counted = "1";
-            if (!reduced) animateCount(el);
+            animateCount(el);
           }
-          revealObserver.unobserve(el);
+          observer.unobserve(el);
         }
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
+      { rootMargin: "0px 0px -6% 0px", threshold: 0.1 },
     );
 
-    // Bound per effect run (StrictMode/route changes re-run this effect with a fresh observer).
+    // Bound per effect run (StrictMode / route changes re-run with a fresh observer).
     const bound = new WeakSet<Element>();
-    const bind = (el: Element) => {
-      if (bound.has(el)) return false;
-      bound.add(el);
-      return true;
-    };
+    let stackLists: HTMLElement[][] = [];
 
     const scan = () => {
       const main = document.querySelector(".main-content");
       if (!main) return;
 
-      main.querySelectorAll<HTMLElement>(AUTO_REVEAL).forEach((el) => {
-        if (!bind(el) || reduced || el.classList.contains("is-visible")) return;
-        // Stagger siblings that share a parent grid.
-        const siblings = el.parentElement
-          ? Array.from(el.parentElement.children).filter((c) => c.matches(AUTO_REVEAL))
-          : [];
-        const index = Math.max(0, siblings.indexOf(el));
-        el.style.setProperty("--reveal-delay", `${Math.min(index, 6) * 80}ms`);
-        el.classList.add("reveal");
-        revealObserver.observe(el);
-      });
+      if (!reduced) {
+        main.querySelectorAll<HTMLElement>(AUTO_REVEAL).forEach((el) => {
+          if (bound.has(el) || el.classList.contains("is-visible")) return;
+          bound.add(el);
+          const siblings = el.parentElement
+            ? Array.from(el.parentElement.children).filter((c) => c.matches(AUTO_REVEAL))
+            : [];
+          const index = Math.max(0, siblings.indexOf(el));
+          el.style.setProperty("--reveal-delay", `${Math.min(index, 4) * 70}ms`);
+          el.classList.add("reveal");
+          observer.observe(el);
+        });
 
-      main.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
-        if (!bind(el) || reduced || el.classList.contains("is-visible")) return;
-        el.classList.add("reveal");
-        revealObserver.observe(el);
-      });
+        main.querySelectorAll<HTMLElement>("[data-count]").forEach((el) => {
+          if (bound.has(el) || el.dataset.counted) return;
+          bound.add(el);
+          el.textContent = formatCount(0, el);
+          observer.observe(el);
+        });
+      }
 
-      main.querySelectorAll<HTMLElement>("[data-count]").forEach((el) => {
-        if (!bind(el) || reduced || el.dataset.counted) return;
-        el.textContent = formatCount(0, el);
-        revealObserver.observe(el);
-      });
+      stackLists = Array.from(main.querySelectorAll<HTMLElement>(".stack-list")).map((list) =>
+        Array.from(list.querySelectorAll<HTMLElement>(":scope > .stack-item")),
+      );
     };
 
     scan();
-    // Lazy content (e.g. chat, Calendly, route transitions) — rescan on DOM changes.
-    const mutationObserver = new MutationObserver(() => scan());
+    const mutationObserver = new MutationObserver(scan);
     const main = document.querySelector(".main-content");
     if (main) mutationObserver.observe(main, { childList: true, subtree: true });
 
-    // ---- Scroll-linked effects ----------------------------------------------
+    // ---- Scroll-linked work (one rAF per frame, cached element lists) -------
     let frame = 0;
+    const updateStacks = () => {
+      for (const items of stackLists) {
+        if (!items.length) continue;
+        const sticky = getComputedStyle(items[0]).position === "sticky";
+        const offset =
+          parseFloat(getComputedStyle(items[0].parentElement!).getPropertyValue("--stack-offset")) || 0;
+        // How far each card j (j >= 1) has slid over the one before it, 0..1.
+        const arrival = items.map((item, j) => {
+          if (!sticky || j === 0) return 0;
+          const prev = items[j - 1];
+          const d = item.getBoundingClientRect().top - prev.getBoundingClientRect().top;
+          return Math.min(1, Math.max(0, 1 - (d - offset) / prev.offsetHeight));
+        });
+        items.forEach((item, i) => {
+          const card = item.firstElementChild as HTMLElement | null;
+          if (!card) return;
+          let depth = 0;
+          for (let j = i + 1; j < items.length; j++) depth += arrival[j];
+          if (!sticky || depth === 0) {
+            card.style.removeProperty("transform");
+            card.style.removeProperty("filter");
+            return;
+          }
+          card.style.transform = `scale(${(1 - Math.min(depth, 4) * 0.04).toFixed(4)})`;
+          card.style.filter = `brightness(${(1 - Math.min(depth, 3) * 0.2).toFixed(3)})`;
+        });
+      }
+    };
+
     const update = () => {
       frame = 0;
-      const vh = window.innerHeight;
-      const scrollMax = document.documentElement.scrollHeight - vh;
-      const progress = scrollMax > 0 ? window.scrollY / scrollMax : 0;
-      if (barRef.current) barRef.current.style.transform = `scaleX(${progress})`;
+      const scrollMax = root.scrollHeight - window.innerHeight;
+      if (barRef.current) {
+        barRef.current.style.transform = `scaleX(${scrollMax > 0 ? window.scrollY / scrollMax : 0})`;
+      }
       root.classList.toggle("is-scrolled", window.scrollY > 24);
-
-      if (reduced) return;
-
-      document.querySelectorAll<HTMLElement>("[data-parallax]").forEach((el) => {
-        const speed = Number(el.dataset.parallax) || 0.1;
-        const rect = el.getBoundingClientRect();
-        if (rect.bottom < -200 || rect.top > vh + 200) return;
-        const offset = (rect.top + rect.height / 2 - vh / 2) * -speed;
-        el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0)`;
-      });
-
-      document.querySelectorAll<HTMLElement>("[data-scroll-x]").forEach((el) => {
-        const speed = Number(el.dataset.scrollX) || 0.3;
-        const rect = el.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > vh) return;
-        const offset = (vh - rect.top) * speed;
-        el.style.transform = `translate3d(${(-offset).toFixed(1)}px, 0, 0)`;
-      });
-
-      document.querySelectorAll<HTMLElement>(".scrub-text").forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        // 0 when the block's top reaches 85% of viewport, 1 when its bottom reaches 45%.
-        const start = vh * 0.85;
-        const end = vh * 0.45;
-        const total = start - end + rect.height;
-        const p = Math.min(1, Math.max(0, (start - rect.top) / total));
-        const words = el.querySelectorAll<HTMLElement>(".scrub-word");
-        const lit = Math.round(p * words.length);
-        words.forEach((w, i) => w.classList.toggle("is-lit", i < lit));
-      });
-
-      const stackCards = Array.from(document.querySelectorAll<HTMLElement>(".stack-card"));
-      stackCards.forEach((card, i) => {
-        const next = stackCards[i + 1];
-        if (!next || !window.matchMedia("(min-width: 821px)").matches) {
-          card.style.removeProperty("--stack-p");
-          return;
-        }
-        const gap = next.getBoundingClientRect().top - card.getBoundingClientRect().top;
-        const p = Math.min(1, Math.max(0, 1 - gap / card.offsetHeight));
-        card.style.setProperty("--stack-p", p.toFixed(3));
-      });
+      if (!reduced) updateStacks();
     };
 
     const onScroll = () => {
@@ -186,7 +159,8 @@ export function ScrollEffects() {
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
 
-    // ---- Pointer spotlight --------------------------------------------------
+    // ---- Pointer spotlight (fine pointers only) ------------------------------
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const onPointerMove = (event: PointerEvent) => {
       const target = (event.target as HTMLElement | null)?.closest<HTMLElement>(".spotlight");
       if (!target) return;
@@ -194,10 +168,10 @@ export function ScrollEffects() {
       target.style.setProperty("--mx", `${event.clientX - rect.left}px`);
       target.style.setProperty("--my", `${event.clientY - rect.top}px`);
     };
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    if (finePointer) window.addEventListener("pointermove", onPointerMove, { passive: true });
 
     return () => {
-      revealObserver.disconnect();
+      observer.disconnect();
       mutationObserver.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);

@@ -8,15 +8,15 @@ export function HowItWorksPage() {
     <>
       <PageHero
         eyebrow="How It Works"
-        title="A simple path from idea to live automation."
-        description="The process stays short, practical, and easy to understand."
+        title="Five steps from idea to live automation."
+        description="Short, practical, and easy to follow."
       />
       <section>
-        <ProcessStepsGrid steps={processSteps} />
+        <ProcessStepsGrid steps={processSteps} layout="stack" />
       </section>
       <CtaBanner
         eyebrow="Ready To Start"
-        title="We keep the first phase focused so you can go live without a long build cycle."
+        title="Step one is a 30-minute call."
         primary={defaultPrimaryCta}
       />
     </>

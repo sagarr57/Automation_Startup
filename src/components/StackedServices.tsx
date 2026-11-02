@@ -1,16 +1,22 @@
 import { NavLink } from "react-router-dom";
 import type { ServiceCard } from "../siteData";
+import { StackList } from "./StackList";
 
-/** Services as full-width sticky cards that stack over each other while scrolling. */
-export function StackedServices({ services }: { services: ServiceCard[] }) {
+type StackedServicesProps = {
+  services: ServiceCard[];
+  /** Show the "Know more" link to /services (off on the Services page itself). */
+  showLink?: boolean;
+};
+
+/** Services as cards that stack over each other while scrolling. */
+export function StackedServices({ services, showLink = true }: StackedServicesProps) {
   return (
-    <div className="stack-cards">
-      {services.map((service, i) => (
-        <article
-          className="stack-card spotlight"
-          key={service.title}
-          style={{ ["--i" as string]: i }}
-        >
+    <StackList>
+      {services.map((service) => (
+        <article className="stack-card stack-card-service spotlight" key={service.title}>
+          <span className="stack-card-watermark" aria-hidden="true">
+            {service.index}
+          </span>
           <div className="stack-card-index" aria-hidden="true">
             {service.index}
           </div>
@@ -24,9 +30,11 @@ export function StackedServices({ services }: { services: ServiceCard[] }) {
                 <li key={point}>{point}</li>
               ))}
             </ul>
-            <NavLink className="text-link" to="/services">
-              Know more <span aria-hidden="true">→</span>
-            </NavLink>
+            {showLink && (
+              <NavLink className="text-link" to="/services">
+                Know more <span aria-hidden="true">→</span>
+              </NavLink>
+            )}
           </div>
           <div className="stack-card-stat">
             <strong>{service.stat}</strong>
@@ -35,6 +43,6 @@ export function StackedServices({ services }: { services: ServiceCard[] }) {
           </div>
         </article>
       ))}
-    </div>
+    </StackList>
   );
 }

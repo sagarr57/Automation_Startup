@@ -2,8 +2,6 @@ import type { WorkProject } from "../workData";
 
 type DeviceMockupProps = {
   project: WorkProject;
-  /** Parallax speed for the floating phone; 0 disables. */
-  parallax?: number;
   eager?: boolean;
 };
 
@@ -17,7 +15,7 @@ function hostOf(project: WorkProject) {
 }
 
 /** Desktop browser frame with a phone frame overlapping the corner. */
-export function DeviceMockup({ project, parallax = 0.08, eager = false }: DeviceMockupProps) {
+export function DeviceMockup({ project, eager = false }: DeviceMockupProps) {
   const loading = eager ? "eager" : "lazy";
 
   return (
@@ -39,7 +37,7 @@ export function DeviceMockup({ project, parallax = 0.08, eager = false }: Device
           decoding="async"
         />
       </figure>
-      <figure className="phone-frame" data-parallax={parallax || undefined}>
+      <figure className="phone-frame">
         <div className="phone-notch" aria-hidden="true" />
         <img
           src={project.images.mobile}

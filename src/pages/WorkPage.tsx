@@ -19,8 +19,7 @@ export function WorkPage() {
           </span>
         </h1>
         <p className="page-copy">
-          Three recent builds: a community platform, a parts catalog, and a self-publishing media
-          site. Each one shipped with the automation built in, not added later.
+          Three recent builds, each shipped with the automation built in.
         </p>
         <nav className="work-jump" aria-label="Case studies">
           {workProjects.map((p, i) => (
@@ -56,7 +55,7 @@ export function WorkPage() {
           </header>
 
           <div className="case-media">
-            <DeviceMockup project={project} parallax={0.1} eager={i === 0} />
+            <DeviceMockup project={project} eager={i === 0} />
           </div>
 
           <div className="case-stats">
@@ -69,7 +68,6 @@ export function WorkPage() {
             <div className="case-col">
               <p className="mini-label">The brief</p>
               <p className="case-summary">{project.summary}</p>
-              <p>{project.challenge}</p>
               {project.url ? (
                 <a
                   className="button button-primary case-cta"
@@ -84,7 +82,7 @@ export function WorkPage() {
             <div className="case-col">
               <p className="mini-label">What we built</p>
               <ul className="case-list">
-                {project.built.map((item) => (
+                {project.built.slice(0, 4).map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
@@ -92,7 +90,7 @@ export function WorkPage() {
             <div className="case-col">
               <p className="mini-label">Automation built in</p>
               <ul className="case-list case-list-auto">
-                {project.automation.map((item) => (
+                {project.automation.slice(0, 3).map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
