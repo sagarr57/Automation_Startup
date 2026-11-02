@@ -28,6 +28,9 @@ export type ServiceCard = {
   summary: string;
   launchWindow: string;
   points: string[];
+  /** Headline figure shown on the stacked home-page card. */
+  stat: string;
+  statLabel: string;
 };
 
 export type Industry = {
@@ -57,6 +60,7 @@ export type FAQItem = {
 };
 
 export const navigation: NavItem[] = [
+  { label: "Work", to: "/work" },
   { label: "Services", to: "/services" },
   { label: "Results", to: "/results" },
   { label: "How It Works", to: "/how-it-works" },
@@ -133,6 +137,8 @@ export const serviceCards: ServiceCard[] = [
     summary:
       "Always-on phone and WhatsApp agents that respond instantly, qualify inbound demand, and book next steps in Arabic and English.",
     launchWindow: "Live in 2-4 weeks",
+    stat: "24/7",
+    statLabel: "Inbound coverage, Arabic & English",
     points: [
       "24/7 inbound response",
       "Qualification and routing",
@@ -148,6 +154,8 @@ export const serviceCards: ServiceCard[] = [
     summary:
       "Workflow systems that sync CRM, forms, calendars, notifications, documents, and follow-up into one operating layer.",
     launchWindow: "Results in 2-3 weeks",
+    stat: "30s",
+    statLabel: "Form to CRM to WhatsApp follow-up",
     points: [
       "CRM and tool sync",
       "Automated handoffs",
@@ -163,6 +171,8 @@ export const serviceCards: ServiceCard[] = [
     summary:
       "Executive-grade reporting that shows what your AI systems are producing, where revenue leakage lives, and what should change next.",
     launchWindow: "Built into every engagement",
+    stat: "1 view",
+    statLabel: "Every channel, every Monday",
     points: [
       "Conversion visibility",
       "Channel quality insight",
@@ -178,6 +188,8 @@ export const serviceCards: ServiceCard[] = [
     summary:
       "Static sites, dynamic web apps, 3D immersive experiences, custom CRMs, and client portals — built fast, connected to automation from the first commit.",
     launchWindow: "Delivered in 2-6 weeks",
+    stat: "Day 1",
+    statLabel: "Automation live at launch",
     points: [
       "Static, dynamic & 3D sites",
       "Custom CRMs & portals",

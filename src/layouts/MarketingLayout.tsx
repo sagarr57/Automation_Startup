@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import AskDravyxChat from "../AskDravyxChat";
 import { BrandLockup } from "../components/BrandLockup";
+import { ScrollEffects } from "../components/ScrollEffects";
 import { ScrollToTop } from "../components/ScrollToTop";
 import { ContactReachLinks } from "../components/ContactReachLinks";
 import { SocialIconLink } from "../components/SocialIconLink";
@@ -14,6 +15,7 @@ export function MarketingLayout() {
   return (
     <div className="site-shell">
       <ScrollToTop />
+      <ScrollEffects />
       <header className="site-header">
         <NavLink className="brand-link" to="/">
           <BrandLockup full />
@@ -59,8 +61,8 @@ export function MarketingLayout() {
         <div className="footer-brand">
           <BrandLockup footer />
           <p>
-            Dravyx AI helps service businesses automate lead response, follow-up, and reporting
-            without making the customer experience feel robotic.
+            Dravyx AI builds websites, web apps, and platforms with the automation built in: lead
+            response, follow-up, and reporting that work from launch day.
           </p>
         </div>
         <div className="footer-meta">

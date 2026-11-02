@@ -4,6 +4,11 @@ export const seoByPath: Record<string, { title: string; description: string }> =
     description:
       "Dravyx AI helps Dubai service businesses automate lead response, follow-up, and reporting with clear, practical systems.",
   },
+  "/work": {
+    title: "Our Work | Dravyx AI Case Studies",
+    description:
+      "Case studies from Dravyx AI: the IPF UAE multilingual community platform, the SRR Auto Spare Parts catalog with WhatsApp ordering, and The Kaash Journal.",
+  },
   "/services": {
     title: "Services | Dravyx AI Voice Agents and Workflow Automation",
     description:

@@ -15,6 +15,7 @@ import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
 import { ResultsPage } from "./pages/ResultsPage";
 import { ServicesPage } from "./pages/ServicesPage";
 import { TermsPage } from "./pages/TermsPage";
+import { WorkPage } from "./pages/WorkPage";
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
         </Route>
         <Route element={<MarketingLayout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/work" element={<WorkPage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/how-it-works" element={<HowItWorksPage />} />

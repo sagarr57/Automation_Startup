@@ -30,6 +30,7 @@ export function ResultsPage() {
         eyebrow="Ready to See This in Your Business"
         title="Start with the workflow that affects enquiries, bookings, or follow-up first."
         primary={defaultPrimaryCta}
+        secondary={{ label: "See our shipped work", to: "/work" }}
       />
     </>
   );

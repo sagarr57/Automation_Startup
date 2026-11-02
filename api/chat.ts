@@ -51,7 +51,7 @@ Our strongest industries:
 - Education and training centres
 - Multi-location service businesses
 
-═══ THREE SERVICES ═══
+═══ FOUR SERVICES ═══
 
 1. VOICE AGENTS
 What: Always-on phone and WhatsApp AI agents that respond instantly, qualify inbound leads, and book next steps — in Arabic and English.
@@ -100,6 +100,22 @@ Key difference from a web agency: We do not just hand over a site. We connect it
 
 IF SOMEONE ASKS "do you build websites?" or "can you build a web app?":
 Answer: "Yes — web development is one of our four services. We build static sites, dynamic React and Next.js apps, 3D immersive experiences, custom CRMs, and client portals. The difference: we ship automation into the build from day one — so when your site goes live, leads flow into your CRM, follow-up fires automatically, and reporting is already running. What kind of site or app do you have in mind?"
+
+═══ OUR WORK (REAL, SHIPPED PROJECTS — full case studies at /work) ═══
+
+1. IPF UAE Digital Platform — Indian People's Forum UAE (community organisation, Ajman).
+   Replaced a ~20-page static PHP site with a 10-language community website and member platform: chapter and council pages (7 UAE chapters, 19 councils), events with RSVP and check-in, a block-based CMS, a role-based admin workspace (5 scoped roles), digital QR member ID cards, and a central draft → review → publish approval flow. Admin-written content is auto-translated into 10 languages.
+   Stack: React, TypeScript, Supabase (Postgres with row-level security), Vercel Functions, Upstash Redis.
+
+2. SRR Auto Spare Parts — automotive parts seller in Dubai. Pre-launch.
+   A catalog of 4,700+ parts across 32 categories, mapped to 39 vehicle makes and 3,992 variants. Customers pick their vehicle, search by name, part number, or OEM reference, and send a priced order over WhatsApp in one tap. Admin console for parts, categories, vehicles, and bulk fitment, with bulk CSV inventory import and rule-based auto-categorisation.
+   Stack: Next.js, Prisma, Neon Postgres, Vercel Blob.
+
+3. The Kaash Journal — UK AI & fintech publication. Live at thekaashjournal.com.
+   92 articles across 5 verticals. A daily scheduled job publishes queued posts automatically, newsletter sign-ups sync to Brevo, and a private admin dashboard tracks first-party analytics, GA4 data, clicks, and revenue. Full SEO and compliance setup.
+   Stack: React, Vite, Supabase, Vercel Functions + Cron, Brevo, GA4 Data API.
+
+When someone asks for examples, past work, or proof, mention the relevant project briefly and point them to the Work page. Do not invent client results or metrics beyond the facts above.
 
 ═══ HOW WE WORK (PROCESS) ═══
 

@@ -249,7 +249,7 @@ function getDravyxAnswer(question: string, context: ConversationContext): ChatRe
 
   if (/(what is dravyx|what is dravyx ai|tell me about dravyx|about dravyx)/.test(text)) {
     return makeReply(
-      "Dravyx AI helps service businesses respond faster, automate repetitive follow-up, and get clearer visibility into leads, bookings, and workflow performance. The offer is focused on three areas: voice agents, workflow automation, and strategic reporting.",
+      "Dravyx AI helps service businesses respond faster, automate repetitive follow-up, and get clearer visibility into leads, bookings, and workflow performance. The offer covers four areas: voice agents, workflow automation, strategic reporting, and web development — with recent work including the IPF UAE community platform, the SRR Auto Spare Parts catalog, and The Kaash Journal (see /work).",
     );
   }
 
@@ -359,7 +359,7 @@ function getDravyxAnswer(question: string, context: ConversationContext): ChatRe
 
   if (/(what do you do|what can you do|what can dravyx do|how can you help)/.test(text)) {
     return makeReply(
-      `Dravyx AI helps service businesses in three main ways: ${joinLabels(serviceNames)}. That usually means faster first response, less repetitive admin, and better visibility into what is happening across enquiries and bookings.`,
+      `Dravyx AI helps service businesses in four main ways: ${joinLabels(serviceNames)}. That usually means faster first response, less repetitive admin, and better visibility into what is happening across enquiries and bookings.`,
     );
   }
 
@@ -438,7 +438,7 @@ function getDravyxAnswer(question: string, context: ConversationContext): ChatRe
 
   if (/(services|offer|do you do|what do you offer|help)/.test(text)) {
     return makeReply(
-      `We focus on three core services: ${joinLabels(serviceNames)}. Typical delivery includes ${joinLabels(servicePoints.slice(0, 6))}, depending on the workflow and business need.`,
+      `We focus on four core services: ${joinLabels(serviceNames)}. Typical delivery includes ${joinLabels(servicePoints.slice(0, 6))}, depending on the workflow and business need.`,
     );
   }
 
