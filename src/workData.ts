@@ -125,13 +125,13 @@ export const workProjects: WorkProject[] = [
       { value: 39, label: "Vehicle makes" },
       { value: 32, label: "Part categories" },
     ],
-    accent: "#4d8bf0",
+    accent: "#e5383b",
     status: "Pre-launch",
     images: {
       desktop: "/work/srr-desktop.jpg",
       mobile: "/work/srr-mobile.jpg",
-      desktopAlt: "SRR Auto Spare Parts catalog on desktop, showing vehicle selector, category filters, and part cards",
-      mobileAlt: "SRR Auto Spare Parts homepage on mobile, showing part search and catalog buttons",
+      desktopAlt: "SRR Auto Spare Parts homepage on desktop, showing part search, the Shop by Vehicle selector, and catalog stats",
+      mobileAlt: "SRR Auto Spare Parts homepage on mobile, showing part search, vehicle selector, and popular categories",
     },
   },
   {
