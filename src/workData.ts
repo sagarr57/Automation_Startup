@@ -128,8 +128,8 @@ export const workProjects: WorkProject[] = [
     accent: "#e5383b",
     status: "Pre-launch",
     images: {
-      desktop: "/work/srr-desktop.jpg",
-      mobile: "/work/srr-mobile.jpg",
+      desktop: "/work/srr-new-desktop.jpg",
+      mobile: "/work/srr-new-mobile.jpg",
       desktopAlt: "SRR Auto Spare Parts homepage on desktop, showing part search, the Shop by Vehicle selector, and catalog stats",
       mobileAlt: "SRR Auto Spare Parts homepage on mobile, showing part search, vehicle selector, and popular categories",
     },
